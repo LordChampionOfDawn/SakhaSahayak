@@ -4,131 +4,179 @@ export const touristPlaces = [
     name: "Rishikesh",
     location: "Dehradun District",
     category: "spiritual",
+    image: "https://images.pexels.com/photos/3573382/pexels-photo-3573382.jpeg?auto=compress&cs=tinysrgb&w=800",
     description: "Known as the 'Yoga Capital of the World', Rishikesh offers spiritual experiences, adventure sports, and beautiful ashrams along the holy Ganges.",
+    entryFee: "Free",
     rating: 4.8,
     visitDuration: "2-3 days",
     bestTime: "Oct-Mar",
-    highlights: ["River Rafting", "Yoga Retreats", "Lakshman Jhula", "Evening Aarti"]
+    highlights: ["River Rafting", "Yoga Retreats", "Lakshman Jhula", "Evening Aarti"],
+    nearbyHotels: ["The Himalayan Heritage Resort", "Ganga View Hotel"],
+    nearbyRestaurants: ["Ganga View Restaurant", "Little Buddha Cafe"]
   },
   {
     id: 2,
     name: "Nainital",
     location: "Nainital District",
     category: "nature",
+    image: "https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg?auto=compress&cs=tinysrgb&w=800",
     description: "A picturesque hill station built around the beautiful Naini Lake, offering boating, shopping at Mall Road, and stunning mountain views.",
+    entryFee: "Free (Boating charges extra)",
     rating: 4.6,
     visitDuration: "3-4 days",
     bestTime: "Mar-Jun, Sep-Nov",
-    highlights: ["Naini Lake", "Snow View Point", "Naina Devi Temple", "Mall Road"]
+    highlights: ["Naini Lake", "Snow View Point", "Naina Devi Temple", "Mall Road"],
+    nearbyHotels: ["Hotel Snow View Palace", "Lake View Resort"],
+    nearbyRestaurants: ["Boat House Club Restaurant", "Mall Road Cafe"]
   },
   {
     id: 3,
     name: "Kedarnath Temple",
     location: "Rudraprayag District",
     category: "spiritual",
+    image: "https://images.pexels.com/photos/3573382/pexels-photo-3573382.jpeg?auto=compress&cs=tinysrgb&w=800",
     description: "One of the twelve Jyotirlingas of Lord Shiva, this sacred temple is situated at 3,583 meters and requires a challenging trek.",
+    entryFee: "Free",
     rating: 4.9,
     visitDuration: "2-3 days",
     bestTime: "May-Jun, Sep-Oct",
-    highlights: ["Ancient Temple", "Mountain Trek", "Spiritual Experience", "Helicopter Service"]
+    highlights: ["Ancient Temple", "Mountain Trek", "Spiritual Experience", "Helicopter Service"],
+    nearbyHotels: ["Kedarnath Guest House", "GMVN Tourist Rest House"],
+    nearbyRestaurants: ["Temple Prasad Hall", "Mountain View Dhaba"]
   },
   {
     id: 4,
     name: "Valley of Flowers",
     location: "Chamoli District",
     category: "nature",
+    image: "https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg?auto=compress&cs=tinysrgb&w=800",
     description: "A UNESCO World Heritage Site, this valley blooms with rare alpine flowers and offers breathtaking views of snow-capped peaks.",
+    entryFee: "₹150 per person",
     rating: 4.7,
     visitDuration: "4-5 days",
     bestTime: "Jul-Sep",
-    highlights: ["Alpine Flowers", "UNESCO Heritage", "Hemkund Sahib", "Trekking"]
+    highlights: ["Alpine Flowers", "UNESCO Heritage", "Hemkund Sahib", "Trekking"],
+    nearbyHotels: ["Govindghat Lodge", "Ghangaria Rest House"],
+    nearbyRestaurants: ["Valley View Cafe", "Trekker's Delight"]
   },
   {
     id: 5,
     name: "Mussoorie",
     location: "Dehradun District",
     category: "nature",
+    image: "https://images.pexels.com/photos/3573382/pexels-photo-3573382.jpeg?auto=compress&cs=tinysrgb&w=800",
     description: "The 'Queen of Hills' offers colonial architecture, scenic cable car rides, and panoramic views of the Himalayas.",
+    entryFee: "Free (Cable car charges extra)",
     rating: 4.5,
     visitDuration: "2-3 days",
     bestTime: "Apr-Jun, Sep-Nov",
-    highlights: ["Gun Hill", "Kempty Falls", "Mall Road", "Cable Car"]
+    highlights: ["Gun Hill", "Kempty Falls", "Mall Road", "Cable Car"],
+    nearbyHotels: ["Mountain Homestay Delight", "Hill View Resort"],
+    nearbyRestaurants: ["Mall Road Cafe", "Mountain View Restaurant"]
   },
   {
     id: 6,
     name: "Haridwar",
     location: "Haridwar District",
     category: "spiritual",
+    image: "https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg?auto=compress&cs=tinysrgb&w=800",
     description: "One of the seven holiest places for Hindus, famous for the evening Ganga Aarti at Har Ki Pauri and the Kumbh Mela.",
+    entryFee: "Free",
     rating: 4.6,
     visitDuration: "1-2 days",
     bestTime: "Oct-Mar",
-    highlights: ["Har Ki Pauri", "Ganga Aarti", "Chandi Devi Temple", "Mansa Devi Temple"]
+    highlights: ["Har Ki Pauri", "Ganga Aarti", "Chandi Devi Temple", "Mansa Devi Temple"],
+    nearbyHotels: ["Budget Lodge Haridwar", "Ganga View Hotel"],
+    nearbyRestaurants: ["Dhaba Junction", "Ganga Side Restaurant"]
   },
   {
     id: 7,
     name: "Auli",
     location: "Chamoli District",
     category: "adventure",
+    image: "https://images.pexels.com/photos/3573382/pexels-photo-3573382.jpeg?auto=compress&cs=tinysrgb&w=800",
     description: "A premier skiing destination in India with snow-covered slopes and panoramic views of Nanda Devi and other peaks.",
+    entryFee: "₹50 per person (Ropeway extra)",
     rating: 4.4,
     visitDuration: "3-4 days",
     bestTime: "Dec-Mar (skiing), Apr-Jun",
-    highlights: ["Skiing", "Ropeway", "Nanda Devi Views", "Adventure Sports"]
+    highlights: ["Skiing", "Ropeway", "Nanda Devi Views", "Adventure Sports"],
+    nearbyHotels: ["Alpine Ski Resort Auli", "GMVN Ski Resort"],
+    nearbyRestaurants: ["Himalayan Treats", "Ski Lodge Restaurant"]
   },
   {
     id: 8,
     name: "Badrinath Temple",
     location: "Chamoli District",
     category: "spiritual",
+    image: "https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg?auto=compress&cs=tinysrgb&w=800",
     description: "One of the Char Dham pilgrimage sites, this ancient temple dedicated to Lord Vishnu is situated in the Garhwal Himalayas.",
+    entryFee: "Free",
     rating: 4.8,
     visitDuration: "2-3 days",
     bestTime: "May-Jun, Sep-Oct",
-    highlights: ["Ancient Temple", "Hot Springs", "Mata Murti Temple", "Pilgrimage"]
+    highlights: ["Ancient Temple", "Hot Springs", "Mata Murti Temple", "Pilgrimage"],
+    nearbyHotels: ["Badrinath Guest House", "Sarovar Portico"],
+    nearbyRestaurants: ["Temple Prasad Hall", "Pilgrim's Rest"]
   },
   {
     id: 9,
     name: "Jim Corbett National Park",
     location: "Nainital District",
     category: "nature",
+    image: "https://images.pexels.com/photos/3573382/pexels-photo-3573382.jpeg?auto=compress&cs=tinysrgb&w=800",
     description: "India's first national park, famous for tigers, elephants, and diverse wildlife. Offers jungle safaris and eco-tourism.",
+    entryFee: "₹200 per person (Safari extra)",
     rating: 4.5,
     visitDuration: "2-3 days",
     bestTime: "Nov-Jun",
-    highlights: ["Tiger Safari", "Wildlife Photography", "Corbett Falls", "Bird Watching"]
+    highlights: ["Tiger Safari", "Wildlife Photography", "Corbett Falls", "Bird Watching"],
+    nearbyHotels: ["Corbett Wildlife Resort", "Jim's Jungle Retreat"],
+    nearbyRestaurants: ["The Corbett Machan", "Wildlife Cafe"]
   },
   {
     id: 10,
     name: "Chopta",
     location: "Rudraprayag District",
     category: "nature",
+    image: "https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg?auto=compress&cs=tinysrgb&w=800",
     description: "Known as 'Mini Switzerland of India', Chopta offers meadows, trekking trails, and serves as base for Tungnath Temple trek.",
+    entryFee: "Free",
     rating: 4.3,
     visitDuration: "2-3 days",
     bestTime: "Apr-Jun, Sep-Nov",
-    highlights: ["Tungnath Trek", "Chandrashila Peak", "Meadows", "Camping"]
+    highlights: ["Tungnath Trek", "Chandrashila Peak", "Meadows", "Camping"],
+    nearbyHotels: ["Chopta Meadows Resort", "Tungnath Guest House"],
+    nearbyRestaurants: ["Mountain Cafe", "Trekker's Paradise"]
   },
   {
     id: 11,
     name: "Gangotri",
     location: "Uttarkashi District",
     category: "spiritual",
+    image: "https://images.pexels.com/photos/3573382/pexels-photo-3573382.jpeg?auto=compress&cs=tinysrgb&w=800",
     description: "The source of River Ganga and one of the Char Dham sites, offering spiritual significance and stunning mountain scenery.",
+    entryFee: "Free",
     rating: 4.7,
     visitDuration: "2-3 days",
     bestTime: "May-Jun, Sep-Oct",
-    highlights: ["Ganga Origin", "Ancient Temple", "Gaumukh Trek", "Pilgrimage"]
+    highlights: ["Ganga Origin", "Ancient Temple", "Gaumukh Trek", "Pilgrimage"],
+    nearbyHotels: ["Gangotri Guest House", "GMVN Tourist Lodge"],
+    nearbyRestaurants: ["Ganga View Dhaba", "Pilgrim's Kitchen"]
   },
   {
     id: 12,
     name: "Lansdowne",
     location: "Pauri District",
     category: "nature",
+    image: "https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg?auto=compress&cs=tinysrgb&w=800",
     description: "A quiet hill station with colonial charm, offering peaceful walks, war memorial, and beautiful oak and pine forests.",
+    entryFee: "Free",
     rating: 4.2,
     visitDuration: "2 days",
     bestTime: "Apr-Jun, Sep-Nov",
-    highlights: ["War Memorial", "Bhulla Lake", "Pine Forests", "Colonial Architecture"]
+    highlights: ["War Memorial", "Bhulla Lake", "Pine Forests", "Colonial Architecture"],
+    nearbyHotels: ["Lansdowne Hill Resort", "Colonial Lodge"],
+    nearbyRestaurants: ["Hill Station Cafe", "Pine View Restaurant"]
   }
 ];
