@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AlertTriangle, Phone, MapPin, Shield, Info, Users, Clock, Hospital, Activity } from 'lucide-react';
+import { AlertTriangle, Phone, MapPin, Shield, Info, Users, Clock, Guitar as Hospital, Activity } from 'lucide-react';
 import { hospitals, emergencyServices } from '../data/emergencyData';
 
 const DisasterPage: React.FC = () => {
