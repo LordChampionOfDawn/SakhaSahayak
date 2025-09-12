@@ -152,6 +152,7 @@ export const accommodations = {
       image: "https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg",
       cuisine: "Indian",
       priceRange: "₹₹₹",
+      price: 800,
       rating: 4.7,
       reviews: [
         { user: "Ravi Kumar", rating: 5, comment: "Authentic Garhwali cuisine with amazing mountain views!" },
@@ -166,6 +167,7 @@ export const accommodations = {
       image: "https://images.pexels.com/photos/1552635/pexels-photo-1552635.jpeg",
       cuisine: "Chinese",
       priceRange: "₹₹",
+      price: 500,
       rating: 4.4,
       reviews: [
         { user: "Amit Singh", rating: 4, comment: "Good Chinese food with reasonable prices." },
@@ -180,6 +182,7 @@ export const accommodations = {
       image: "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg",
       cuisine: "Italian",
       priceRange: "₹₹₹",
+      price: 1200,
       rating: 4.6,
       reviews: [
         { user: "Deepak Mehta", rating: 5, comment: "Excellent pasta and pizza with mountain views." },
@@ -194,6 +197,7 @@ export const accommodations = {
       image: "https://images.pexels.com/photos/1307698/pexels-photo-1307698.jpeg",
       cuisine: "Continental",
       priceRange: "₹₹",
+      price: 600,
       rating: 4.3,
       reviews: [
         { user: "Vikram Joshi", rating: 4, comment: "Peaceful riverside dining with healthy options." },
@@ -208,6 +212,7 @@ export const accommodations = {
       image: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg",
       cuisine: "Indian",
       priceRange: "₹₹",
+      price: 450,
       rating: 4.5,
       reviews: [
         { user: "Sunita Devi", rating: 5, comment: "Delicious North Indian food with generous portions." },
@@ -222,6 +227,7 @@ export const accommodations = {
       image: "https://images.pexels.com/photos/1633578/pexels-photo-1633578.jpeg",
       cuisine: "Punjabi",
       priceRange: "₹",
+      price: 300,
       rating: 4.2,
       reviews: [
         { user: "Manish Tiwari", rating: 4, comment: "Authentic dhaba experience with hearty meals." },
@@ -236,6 +242,7 @@ export const accommodations = {
       image: "https://images.pexels.com/photos/1126728/pexels-photo-1126728.jpeg",
       cuisine: "Multi-cuisine",
       priceRange: "₹₹₹₹",
+      price: 2000,
       rating: 4.8,
       reviews: [
         { user: "Arjun Kapoor", rating: 5, comment: "Fine dining experience with impeccable service." },
@@ -250,6 +257,7 @@ export const accommodations = {
       image: "https://images.pexels.com/photos/1581384/pexels-photo-1581384.jpeg",
       cuisine: "Organic",
       priceRange: "₹₹",
+      price: 550,
       rating: 4.4,
       reviews: [
         { user: "Pooja Verma", rating: 4, comment: "Fresh organic ingredients and eco-friendly dining." },

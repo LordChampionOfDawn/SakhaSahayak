@@ -5,6 +5,7 @@ import { accommodations } from '../data/accommodations';
 const AccommodationPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'hotels' | 'restaurants'>('hotels');
   const [priceFilter, setPriceFilter] = useState('all');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | 'none'>('none');
   const [cuisineFilter, setCuisineFilter] = useState('all');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
@@ -16,9 +17,9 @@ const AccommodationPage: React.FC = () => {
 
   const priceFilters = [
     { id: 'all', name: 'All Prices' },
-    { id: 'budget', name: 'Budget (₹0-2000)' },
-    { id: 'mid', name: 'Mid-range (₹2000-5000)' },
-    { id: 'luxury', name: 'Luxury (₹5000+)' },
+    { id: 'budget', name: 'Budget' },
+    { id: 'mid-range', name: 'Mid-range' },
+    { id: 'luxury', name: 'Luxury' },
   ];
 
   const cuisineFilters = [
@@ -35,17 +36,49 @@ const AccommodationPage: React.FC = () => {
   const categoryFilters = [
     { id: 'all', name: 'All Categories' },
     { id: 'budget', name: 'Budget' },
-    { id: 'mid', name: 'Mid-range' },
+    { id: 'mid-range', name: 'Mid-range' },
     { id: 'luxury', name: 'Luxury' },
   ];
-  const filteredData = accommodations[activeTab].filter(item => {
+  
+  const filteredData = accommodations[activeTab]
+    .filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          item.location.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesPrice = priceFilter === 'all' || item.priceRange === priceFilter;
-    const matchesCuisine = activeTab === 'hotels' || cuisineFilter === 'all' || item.type === cuisineFilter;
-    const matchesCategory = activeTab === 'restaurants' || categoryFilter === 'all' || item.priceRange === categoryFilter;
+    
+    let matchesPrice = true;
+    if (activeTab === 'hotels' && priceFilter !== 'all') {
+      matchesPrice = (item as any).category === priceFilter;
+    } else if (activeTab === 'restaurants' && priceFilter !== 'all') {
+      const price = (item as any).price || 0;
+      switch (priceFilter) {
+        case 'budget':
+          matchesPrice = price <= 400;
+          break;
+        case 'mid-range':
+          matchesPrice = price > 400 && price <= 1000;
+          break;
+        case 'luxury':
+          matchesPrice = price > 1000;
+          break;
+      }
+    }
+    
+    const matchesCuisine = activeTab === 'hotels' || cuisineFilter === 'all' || (item as any).cuisine === cuisineFilter;
+    const matchesCategory = activeTab === 'restaurants' || categoryFilter === 'all' || (item as any).category === categoryFilter;
     return matchesSearch && matchesPrice && matchesCuisine && matchesCategory;
-  });
+  })
+    .sort((a, b) => {
+      if (sortOrder === 'none') return 0;
+      
+      const priceA = (a as any).price || 0;
+      const priceB = (b as any).price || 0;
+      
+      if (sortOrder === 'asc') {
+        return priceA - priceB;
+      } else {
+        return priceB - priceA;
+      }
+    });
 
   const renderAmenities = (amenities: string[]) => {
     const iconMap: { [key: string]: React.ComponentType<any> } = {
@@ -145,7 +178,7 @@ const AccommodationPage: React.FC = () => {
         <div className="space-y-3">
           <div className="flex flex-wrap gap-2">
             <span className="text-sm font-medium text-gray-700 px-2 py-1">Price:</span>
-          {priceFilters.map((filter) => (
+            {priceFilters.map((filter) => (
             <button
               key={filter.id}
               onClick={() => setPriceFilter(filter.id)}
@@ -158,6 +191,19 @@ const AccommodationPage: React.FC = () => {
               {filter.name}
             </button>
           ))}
+            <div className="ml-4 flex items-center space-x-2">
+              <span className="text-sm font-medium text-gray-700">Sort:</span>
+              <button
+                onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : sortOrder === 'desc' ? 'none' : 'asc')}
+                className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+                  sortOrder !== 'none'
+                    ? 'bg-green-600 text-white'
+                    : 'bg-white text-gray-600 hover:bg-green-50 border border-gray-200'
+                }`}
+              >
+                Price {sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : '↕'}
+              </button>
+            </div>
           </div>
           
           {activeTab === 'restaurants' && (
@@ -247,7 +293,7 @@ const AccommodationPage: React.FC = () => {
               
               <div className="flex items-center justify-between">
                 <div className="text-green-600 font-semibold">
-                  {item.price}
+                  {activeTab === 'hotels' ? `₹${(item as any).price}` : `₹${(item as any).price}`}
                   {activeTab === 'hotels' && <span className="text-sm text-gray-500">/night</span>}
                 </div>
                 <button className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors">

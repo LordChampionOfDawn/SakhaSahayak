@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import { AlertTriangle, Phone, MapPin, Shield, Info, Users, Clock } from 'lucide-react';
+import { AlertTriangle, Phone, MapPin, Shield, Info, Users, Clock, Hospital, Activity } from 'lucide-react';
+import { hospitals, emergencyServices } from '../data/emergencyData';
 
 const DisasterPage: React.FC = () => {
   const [sosClicked, setSosClicked] = useState(false);
+  const [activeTab, setActiveTab] = useState<'emergency' | 'hospitals'>('emergency');
 
-  const emergencyContacts = [
-    { title: 'Emergency Services', number: '112', description: 'All emergencies' },
-    { title: 'Police', number: '100', description: 'Police assistance' },
-    { title: 'Fire Service', number: '101', description: 'Fire emergency' },
-    { title: 'Ambulance', number: '108', description: 'Medical emergency' },
-    { title: 'Tourist Helpline', number: '1363', description: 'Tourist assistance' },
-    { title: 'Disaster Management', number: '1070', description: 'Disaster response' },
+  const tabs = [
+    { id: 'emergency' as const, name: 'Emergency Contacts', icon: Phone },
+    { id: 'hospitals' as const, name: 'Hospitals', icon: Hospital },
   ];
 
   const currentAlerts = [
@@ -154,10 +152,33 @@ const DisasterPage: React.FC = () => {
       </div>
 
       {/* Emergency Contacts */}
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Emergency Contacts</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {emergencyContacts.map((contact, index) => (
+      {/* Tabs */}
+      <div className="flex flex-wrap gap-4 mb-8 justify-center">
+        {tabs.map((tab) => {
+          const Icon = tab.icon;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-medium transition-all ${
+                activeTab === tab.id
+                  ? 'bg-red-600 text-white shadow-lg'
+                  : 'bg-white text-gray-600 hover:bg-red-50 border border-gray-200'
+              }`}
+            >
+              <Icon className="h-5 w-5" />
+              <span>{tab.name}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Emergency Contacts Tab */}
+      {activeTab === 'emergency' && (
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Emergency Contacts</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {emergencyServices.map((contact, index) => (
             <div
               key={index}
               className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow"
@@ -182,8 +203,84 @@ const DisasterPage: React.FC = () => {
               </div>
             </div>
           ))}
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* Hospitals Tab */}
+      {activeTab === 'hospitals' && (
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Hospitals & Medical Centers</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {hospitals.map((hospital) => (
+              <div
+                key={hospital.id}
+                className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow"
+              >
+                <div className="flex items-start space-x-4 mb-4">
+                  <div className={`p-3 rounded-full ${
+                    hospital.type === 'government' ? 'bg-blue-100' : 
+                    hospital.type === 'private' ? 'bg-green-100' : 'bg-purple-100'
+                  }`}>
+                    <Hospital className={`h-6 w-6 ${
+                      hospital.type === 'government' ? 'text-blue-600' : 
+                      hospital.type === 'private' ? 'text-green-600' : 'text-purple-600'
+                    }`} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 text-lg mb-1">{hospital.name}</h3>
+                    <div className="flex items-center text-gray-600 text-sm mb-2">
+                      <MapPin className="h-4 w-4 mr-1" />
+                      {hospital.location}
+                    </div>
+                    <div className="flex items-center space-x-4 mb-3">
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${
+                        hospital.type === 'government' ? 'bg-blue-100 text-blue-800' : 
+                        hospital.type === 'private' ? 'bg-green-100 text-green-800' : 'bg-purple-100 text-purple-800'
+                      }`}>
+                        {hospital.type}
+                      </span>
+                      {hospital.emergency24x7 && (
+                        <div className="flex items-center">
+                          <Activity className="h-3 w-3 text-red-500 mr-1" />
+                          <span className="text-xs text-red-600 font-medium">24x7 Emergency</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mb-4">
+                  <h4 className="text-sm font-medium text-gray-900 mb-2">Services</h4>
+                  <div className="flex flex-wrap gap-1">
+                    {hospital.services.slice(0, 4).map((service, index) => (
+                      <span
+                        key={index}
+                        className="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs"
+                      >
+                        {service}
+                      </span>
+                    ))}
+                    {hospital.services.length > 4 && (
+                      <span className="text-xs text-gray-500">+{hospital.services.length - 4} more</span>
+                    )}
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <div className="text-lg font-bold text-gray-900">{hospital.contact}</div>
+                  <a
+                    href={`tel:${hospital.contact}`}
+                    className="bg-red-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-700 transition-colors"
+                  >
+                    Call Now
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Safety Tips */}
       <div className="bg-blue-50 rounded-2xl p-8">
