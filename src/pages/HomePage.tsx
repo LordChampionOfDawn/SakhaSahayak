@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Bed, Bus, CloudRain, AlertTriangle, Camera, Star, Users, Phone } from 'lucide-react';
-import InteractiveMap from '../components/InteractiveMap';
+import { MapPin, Bed, Bus, CloudRain, AlertTriangle, Camera, Star, Users } from 'lucide-react';
 
 const HomePage: React.FC = () => {
   const quickActions = [
@@ -42,6 +41,23 @@ const HomePage: React.FC = () => {
     },
   ];
 
+  const highlights = [
+    {
+      title: '50+ Destinations',
+      description: 'Explore breathtaking locations',
+      icon: Camera,
+    },
+    {
+      title: '4.8★ Rating',
+      description: 'Trusted by thousands',
+      icon: Star,
+    },
+    {
+      title: '24/7 Support',
+      description: 'Always here to help',
+      icon: Users,
+    },
+  ];
 
   return (
     <div className="min-h-screen">
@@ -103,69 +119,31 @@ const HomePage: React.FC = () => {
         </div>
       </div>
 
-      {/* Interactive Map Section */}
-      <div className="px-4 py-12 max-w-7xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
-          Explore Locations
-        </h2>
-        <InteractiveMap />
-      </div>
-
-      {/* Tourist Gallery */}
+      {/* Highlights */}
       <div className="bg-gradient-to-r from-green-50 to-blue-50 px-4 py-12">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
-            Popular Attractions
+            Why Choose Us?
           </h2>
-          <div className="relative overflow-hidden rounded-2xl">
-            <div className="flex space-x-4 animate-scroll">
-              {[
-                { name: 'Kedarnath Temple', image: 'https://images.pexels.com/photos/3573382/pexels-photo-3573382.jpeg?auto=compress&cs=tinysrgb&w=800', caption: 'Sacred Jyotirlinga at 3,583m altitude' },
-                { name: 'Valley of Flowers', image: 'https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg?auto=compress&cs=tinysrgb&w=800', caption: 'UNESCO World Heritage alpine valley' },
-                { name: 'Nainital Lake', image: 'https://images.pexels.com/photos/3573382/pexels-photo-3573382.jpeg?auto=compress&cs=tinysrgb&w=800', caption: 'Pristine hill station lake' },
-                { name: 'Rishikesh Ganga', image: 'https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg?auto=compress&cs=tinysrgb&w=800', caption: 'Yoga capital of the world' },
-                { name: 'Auli Slopes', image: 'https://images.pexels.com/photos/3573382/pexels-photo-3573382.jpeg?auto=compress&cs=tinysrgb&w=800', caption: 'Premier skiing destination' }
-              ].map((attraction, index) => (
-                <div key={index} className="flex-shrink-0 w-80 relative">
-                  <img 
-                    src={attraction.image} 
-                    alt={attraction.name}
-                    className="w-full h-48 object-cover rounded-xl"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 rounded-b-xl">
-                    <h3 className="text-white font-semibold text-lg">{attraction.name}</h3>
-                    <p className="text-white/90 text-sm">{attraction.caption}</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {highlights.map((highlight, index) => {
+              const Icon = highlight.icon;
+              return (
+                <div key={index} className="text-center">
+                  <div className="inline-flex p-4 bg-white rounded-full shadow-lg mb-4">
+                    <Icon className="h-8 w-8 text-green-600" />
                   </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{highlight.title}</h3>
+                  <p className="text-gray-600">{highlight.description}</p>
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>
 
-      {/* Emergency Section */}
+      {/* Emergency Quick Access */}
       <div className="px-4 py-8 max-w-7xl mx-auto">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Emergency Contacts</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          {[
-            { title: 'Emergency Services', number: '112', type: 'All emergencies' },
-            { title: 'Tourist Helpline', number: '1363', type: 'Tourist assistance' },
-            { title: 'Disaster Management', number: '1070', type: 'Disaster response' }
-          ].map((contact, index) => (
-            <div key={index} className="bg-white border border-red-200 rounded-xl p-4">
-              <div className="flex items-center space-x-3">
-                <div className="bg-red-100 p-2 rounded-full">
-                  <Phone className="h-5 w-5 text-red-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 text-sm">{contact.title}</h3>
-                  <p className="text-xs text-gray-600">{contact.type}</p>
-                  <p className="text-red-600 font-bold">{contact.number}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
         <div className="bg-red-50 border border-red-200 rounded-2xl p-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -173,8 +151,8 @@ const HomePage: React.FC = () => {
                 <AlertTriangle className="h-6 w-6 text-red-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900">Emergency SOS</h3>
-                <p className="text-sm text-gray-600">Quick access to emergency assistance</p>
+                <h3 className="font-semibold text-gray-900">Emergency Assistance</h3>
+                <p className="text-sm text-gray-600">Quick access to help and safety information</p>
               </div>
             </div>
             <Link
