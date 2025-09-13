@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Bed, Bus, CloudRain, AlertTriangle, Camera, Star, Users, Phone, Calendar } from 'lucide-react';
 import InteractiveMap from '../components/InteractiveMap';
+import TypingAnimation from '../components/TypingAnimation';
 import { eventsData } from '../data/eventsData';
 
 const HomePage: React.FC = () => {
@@ -58,10 +59,7 @@ const HomePage: React.FC = () => {
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative px-4 py-16 md:py-24">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Welcome to
-              <span className="block text-green-300">Uttarakhand</span>
-            </h1>
+            <TypingAnimation />
             <p className="text-lg md:text-xl text-green-100 mb-8 max-w-2xl mx-auto">
               Your ultimate companion for exploring the "Land of Gods" - from majestic Himalayas to spiritual ghats, 
               we've got everything covered for your perfect journey.

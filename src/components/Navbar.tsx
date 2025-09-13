@@ -57,6 +57,22 @@ const Navbar: React.FC = () => {
             >
               Weather
             </Link>
+            <Link
+              to="/disaster"
+              className={`text-sm font-medium transition-colors ${
+                isActive('/disaster') ? 'text-red-600' : 'text-gray-700 hover:text-red-600'
+              }`}
+            >
+              Emergency
+            </Link>
+            <Link
+              to="/events"
+              className={`text-sm font-medium transition-colors ${
+                isActive('/events') ? 'text-purple-600' : 'text-gray-700 hover:text-purple-600'
+              }`}
+            >
+              Events & Festivals
+            </Link>
           </div>
 
           {/* User Menu */}

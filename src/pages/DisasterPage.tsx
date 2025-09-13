@@ -92,9 +92,13 @@ const DisasterPage: React.FC = () => {
           </div>
           <button
             onMouseDown={handleSOS}
-            className={`relative bg-red-600 hover:bg-red-700 text-white rounded-full w-32 h-32 flex items-center justify-center text-2xl font-bold transition-all duration-300 transform hover:scale-105 shadow-lg ${
-              sosClicked ? 'animate-pulse bg-red-700 scale-110' : ''
+            className={`relative bg-red-600 hover:bg-red-700 text-white rounded-full w-32 h-32 flex items-center justify-center text-2xl font-bold transition-all duration-300 transform hover:scale-105 shadow-lg animate-pulse ${
+              sosClicked ? 'bg-red-700 scale-110' : ''
             }`}
+            style={{
+              boxShadow: sosClicked ? '0 0 30px rgba(239, 68, 68, 0.6)' : '0 0 20px rgba(239, 68, 68, 0.4)',
+              animation: sosClicked ? 'pulse 1s infinite' : 'pulse 2s infinite'
+            }}
           >
             {sosClicked ? (
               <div className="text-center">

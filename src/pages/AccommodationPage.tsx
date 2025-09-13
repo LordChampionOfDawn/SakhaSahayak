@@ -261,7 +261,7 @@ const AccommodationPage: React.FC = () => {
         {filteredData.map((item) => (
           <div
             key={item.id}
-            className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+            className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
           >
             <div className="relative h-48">
               <img 
@@ -272,7 +272,7 @@ const AccommodationPage: React.FC = () => {
               <div className="absolute inset-0 bg-black/20"></div>
               <div className="absolute top-4 right-4">
                 <span className="bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium text-gray-700 capitalize">
-                  {item.type}
+                  {activeTab === 'hotels' ? (item as any).category : (item as any).cuisine}
                 </span>
               </div>
             </div>
