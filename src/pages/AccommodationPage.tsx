@@ -5,6 +5,7 @@ import { accommodations } from '../data/accommodations';
 const AccommodationPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'hotels' | 'restaurants'>('hotels');
   const [priceFilter, setPriceFilter] = useState('all');
+  const [sortBy, setSortBy] = useState<'none' | 'price-asc' | 'price-desc' | 'rating-asc' | 'rating-desc'>('none');
   const [cuisineFilter, setCuisineFilter] = useState('all');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
@@ -16,9 +17,9 @@ const AccommodationPage: React.FC = () => {
 
   const priceFilters = [
     { id: 'all', name: 'All Prices' },
-    { id: 'budget', name: 'Budget (₹0-2000)' },
-    { id: 'mid', name: 'Mid-range (₹2000-5000)' },
-    { id: 'luxury', name: 'Luxury (₹5000+)' },
+    { id: 'budget', name: 'Budget' },
+    { id: 'mid-range', name: 'Mid-range' },
+    { id: 'luxury', name: 'Luxury' },
   ];
 
   const cuisineFilters = [
@@ -35,17 +36,58 @@ const AccommodationPage: React.FC = () => {
   const categoryFilters = [
     { id: 'all', name: 'All Categories' },
     { id: 'budget', name: 'Budget' },
-    { id: 'mid', name: 'Mid-range' },
+    { id: 'mid-range', name: 'Mid-range' },
     { id: 'luxury', name: 'Luxury' },
   ];
-  const filteredData = accommodations[activeTab].filter(item => {
-    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         item.location.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesPrice = priceFilter === 'all' || item.priceRange === priceFilter;
-    const matchesCuisine = activeTab === 'hotels' || cuisineFilter === 'all' || item.type === cuisineFilter;
-    const matchesCategory = activeTab === 'restaurants' || categoryFilter === 'all' || item.priceRange === categoryFilter;
-    return matchesSearch && matchesPrice && matchesCuisine && matchesCategory;
-  });
+  
+  const filteredData = accommodations[activeTab]
+    .filter(item => {
+      const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           item.location.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      let matchesPrice = true;
+      if (activeTab === 'hotels' && priceFilter !== 'all') {
+        matchesPrice = (item as any).category === priceFilter;
+      } else if (activeTab === 'restaurants' && priceFilter !== 'all') {
+        const price = (item as any).price || 0;
+        switch (priceFilter) {
+          case 'budget':
+            matchesPrice = price <= 400;
+            break;
+          case 'mid-range':
+            matchesPrice = price > 400 && price <= 1000;
+            break;
+          case 'luxury':
+            matchesPrice = price > 1000;
+            break;
+        }
+      }
+      
+      const matchesCuisine = activeTab === 'hotels' || cuisineFilter === 'all' || (item as any).cuisine === cuisineFilter;
+      const matchesCategory = activeTab === 'restaurants' || categoryFilter === 'all' || (item as any).category === categoryFilter;
+      return matchesSearch && matchesPrice && matchesCuisine && matchesCategory;
+    })
+    .sort((a, b) => {
+      if (sortBy === 'none') return 0;
+      
+      const priceA = (a as any).price || 0;
+      const priceB = (b as any).price || 0;
+      const ratingA = a.rating || 0;
+      const ratingB = b.rating || 0;
+      
+      switch (sortBy) {
+        case 'price-asc':
+          return priceA - priceB;
+        case 'price-desc':
+          return priceB - priceA;
+        case 'rating-asc':
+          return ratingA - ratingB;
+        case 'rating-desc':
+          return ratingB - ratingA;
+        default:
+          return 0;
+      }
+    });
 
   const renderAmenities = (amenities: string[]) => {
     const iconMap: { [key: string]: React.ComponentType<any> } = {
@@ -145,7 +187,7 @@ const AccommodationPage: React.FC = () => {
         <div className="space-y-3">
           <div className="flex flex-wrap gap-2">
             <span className="text-sm font-medium text-gray-700 px-2 py-1">Price:</span>
-          {priceFilters.map((filter) => (
+            {priceFilters.map((filter) => (
             <button
               key={filter.id}
               onClick={() => setPriceFilter(filter.id)}
@@ -158,6 +200,20 @@ const AccommodationPage: React.FC = () => {
               {filter.name}
             </button>
           ))}
+            <div className="ml-4 flex items-center space-x-2">
+              <span className="text-sm font-medium text-gray-700">Sort:</span>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as any)}
+                className="px-3 py-1 rounded-lg text-sm border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-200"
+              >
+                <option value="none">Default</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="rating-asc">Rating: Low to High</option>
+                <option value="rating-desc">Rating: High to Low</option>
+              </select>
+            </div>
           </div>
           
           {activeTab === 'restaurants' && (
@@ -205,7 +261,7 @@ const AccommodationPage: React.FC = () => {
         {filteredData.map((item) => (
           <div
             key={item.id}
-            className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+            className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
           >
             <div className="relative h-48">
               <img 
@@ -216,7 +272,7 @@ const AccommodationPage: React.FC = () => {
               <div className="absolute inset-0 bg-black/20"></div>
               <div className="absolute top-4 right-4">
                 <span className="bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium text-gray-700 capitalize">
-                  {item.type}
+                  {activeTab === 'hotels' ? (item as any).category : (item as any).cuisine}
                 </span>
               </div>
             </div>
@@ -235,7 +291,7 @@ const AccommodationPage: React.FC = () => {
                 {item.location}
               </div>
               
-              <p className="text-gray-600 text-sm mb-4 line-clamp-2">{item.description}</p>
+              <p className="text-gray-600 text-sm mb-4 line-clamp-2">{(item as any).description}</p>
               
               {activeTab === 'hotels' && (
                 <div className="mb-4">
@@ -247,7 +303,7 @@ const AccommodationPage: React.FC = () => {
               
               <div className="flex items-center justify-between">
                 <div className="text-green-600 font-semibold">
-                  {item.price}
+                  {activeTab === 'hotels' ? `₹${(item as any).price}` : (item as any).priceRange}
                   {activeTab === 'hotels' && <span className="text-sm text-gray-500">/night</span>}
                 </div>
                 <button className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors">

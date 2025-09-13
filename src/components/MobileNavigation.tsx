@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, MapPin, Bed, Bus, CloudRain, AlertTriangle } from 'lucide-react';
+import { Home, MapPin, Bed, Bus, CloudRain, AlertTriangle, Calendar } from 'lucide-react';
 
 const MobileNavigation: React.FC = () => {
   const location = useLocation();
@@ -12,6 +12,7 @@ const MobileNavigation: React.FC = () => {
     { path: '/transportation', icon: Bus, label: 'Travel' },
     { path: '/weather', icon: CloudRain, label: 'Weather' },
     { path: '/disaster', icon: AlertTriangle, label: 'SOS' },
+    { path: '/events', icon: Calendar, label: 'Events' },
   ];
 
   const isActive = (path: string) => location.pathname === path;

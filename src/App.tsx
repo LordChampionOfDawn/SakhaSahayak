@@ -9,6 +9,7 @@ import AccommodationPage from './pages/AccommodationPage';
 import TransportationPage from './pages/TransportationPage';
 import WeatherPage from './pages/WeatherPage';
 import DisasterPage from './pages/DisasterPage';
+import EventsPage from './pages/EventsPage';
 import AuthPage from './pages/AuthPage';
 import ProfilePage from './pages/ProfilePage';
 
@@ -38,6 +39,7 @@ function App() {
                     <Route path="/transportation" element={<TransportationPage />} />
                     <Route path="/weather" element={<WeatherPage />} />
                     <Route path="/disaster" element={<DisasterPage />} />
+                    <Route path="/events" element={<EventsPage />} />
                     <Route path="/profile" element={<ProfilePage />} />
                   </Routes>
                 </Layout>

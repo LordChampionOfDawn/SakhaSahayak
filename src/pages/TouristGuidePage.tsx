@@ -162,7 +162,7 @@ const TouristGuidePage: React.FC = () => {
         {filteredPlaces.map((place) => (
           <div
             key={place.id}
-            className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+            className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
           >
             <div className="relative h-48">
               <img 

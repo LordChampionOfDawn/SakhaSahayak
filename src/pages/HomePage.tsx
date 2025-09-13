@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Bed, Bus, CloudRain, AlertTriangle, Camera, Star, Users, Phone } from 'lucide-react';
+import { MapPin, Bed, Bus, CloudRain, AlertTriangle, Camera, Star, Users, Phone, Calendar } from 'lucide-react';
 import InteractiveMap from '../components/InteractiveMap';
+import TypingAnimation from '../components/TypingAnimation';
+import { eventsData } from '../data/eventsData';
 
 const HomePage: React.FC = () => {
   const quickActions = [
@@ -40,6 +42,13 @@ const HomePage: React.FC = () => {
       path: '/disaster',
       color: 'from-red-500 to-pink-600',
     },
+    {
+      title: 'Events & Festivals',
+      description: 'Cultural events & celebrations',
+      icon: Calendar,
+      path: '/events',
+      color: 'from-purple-500 to-indigo-600',
+    },
   ];
 
 
@@ -50,10 +59,7 @@ const HomePage: React.FC = () => {
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative px-4 py-16 md:py-24">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Welcome to
-              <span className="block text-green-300">Uttarakhand</span>
-            </h1>
+            <TypingAnimation />
             <p className="text-lg md:text-xl text-green-100 mb-8 max-w-2xl mx-auto">
               Your ultimate companion for exploring the "Land of Gods" - from majestic Himalayas to spiritual ghats, 
               we've got everything covered for your perfect journey.
@@ -140,6 +146,73 @@ const HomePage: React.FC = () => {
               ))}
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Events & Festivals Section */}
+      <div className="px-4 py-12 max-w-7xl mx-auto">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
+          Events & Festivals
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {eventsData.slice(0, 6).map((event) => (
+            <div
+              key={event.id}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+            >
+              <div className="relative h-48">
+                <img 
+                  src={event.image} 
+                  alt={event.name}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/20"></div>
+                <div className="absolute top-4 right-4">
+                  <span className="bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium text-gray-700">
+                    {event.category}
+                  </span>
+                </div>
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="text-white text-lg font-semibold mb-1">{event.name}</h3>
+                  <div className="flex items-center text-white/90 text-sm">
+                    <MapPin className="h-4 w-4 mr-1" />
+                    {event.location}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="p-6">
+                <p className="text-gray-600 mb-4 line-clamp-3">{event.description}</p>
+                
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center text-sm text-gray-500">
+                    <Calendar className="h-4 w-4 mr-1" />
+                    {event.timing}
+                  </div>
+                </div>
+                
+                <div className="mb-4">
+                  <div className="flex flex-wrap gap-2">
+                    {event.highlights.slice(0, 2).map((highlight, index) => (
+                      <span
+                        key={index}
+                        className="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs"
+                      >
+                        {highlight}
+                      </span>
+                    ))}
+                    {event.highlights.length > 2 && (
+                      <span className="text-xs text-gray-500">+{event.highlights.length - 2} more</span>
+                    )}
+                  </div>
+                </div>
+                
+                <button className="w-full bg-purple-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-purple-700 transition-colors">
+                  Learn More
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
