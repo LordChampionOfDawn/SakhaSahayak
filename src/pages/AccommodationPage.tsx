@@ -5,7 +5,7 @@ import { accommodations } from '../data/accommodations';
 const AccommodationPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'hotels' | 'restaurants'>('hotels');
   const [priceFilter, setPriceFilter] = useState('all');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | 'none'>('none');
+  const [sortBy, setSortBy] = useState<'none' | 'price-asc' | 'price-desc' | 'rating-asc' | 'rating-desc'>('none');
   const [cuisineFilter, setCuisineFilter] = useState('all');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
@@ -42,41 +42,50 @@ const AccommodationPage: React.FC = () => {
   
   const filteredData = accommodations[activeTab]
     .filter(item => {
-    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         item.location.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    let matchesPrice = true;
-    if (activeTab === 'hotels' && priceFilter !== 'all') {
-      matchesPrice = (item as any).category === priceFilter;
-    } else if (activeTab === 'restaurants' && priceFilter !== 'all') {
-      const price = (item as any).price || 0;
-      switch (priceFilter) {
-        case 'budget':
-          matchesPrice = price <= 400;
-          break;
-        case 'mid-range':
-          matchesPrice = price > 400 && price <= 1000;
-          break;
-        case 'luxury':
-          matchesPrice = price > 1000;
-          break;
+      const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           item.location.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      let matchesPrice = true;
+      if (activeTab === 'hotels' && priceFilter !== 'all') {
+        matchesPrice = (item as any).category === priceFilter;
+      } else if (activeTab === 'restaurants' && priceFilter !== 'all') {
+        const price = (item as any).price || 0;
+        switch (priceFilter) {
+          case 'budget':
+            matchesPrice = price <= 400;
+            break;
+          case 'mid-range':
+            matchesPrice = price > 400 && price <= 1000;
+            break;
+          case 'luxury':
+            matchesPrice = price > 1000;
+            break;
+        }
       }
-    }
-    
-    const matchesCuisine = activeTab === 'hotels' || cuisineFilter === 'all' || (item as any).cuisine === cuisineFilter;
-    const matchesCategory = activeTab === 'restaurants' || categoryFilter === 'all' || (item as any).category === categoryFilter;
-    return matchesSearch && matchesPrice && matchesCuisine && matchesCategory;
-  })
+      
+      const matchesCuisine = activeTab === 'hotels' || cuisineFilter === 'all' || (item as any).cuisine === cuisineFilter;
+      const matchesCategory = activeTab === 'restaurants' || categoryFilter === 'all' || (item as any).category === categoryFilter;
+      return matchesSearch && matchesPrice && matchesCuisine && matchesCategory;
+    })
     .sort((a, b) => {
-      if (sortOrder === 'none') return 0;
+      if (sortBy === 'none') return 0;
       
       const priceA = (a as any).price || 0;
       const priceB = (b as any).price || 0;
+      const ratingA = a.rating || 0;
+      const ratingB = b.rating || 0;
       
-      if (sortOrder === 'asc') {
-        return priceA - priceB;
-      } else {
-        return priceB - priceA;
+      switch (sortBy) {
+        case 'price-asc':
+          return priceA - priceB;
+        case 'price-desc':
+          return priceB - priceA;
+        case 'rating-asc':
+          return ratingA - ratingB;
+        case 'rating-desc':
+          return ratingB - ratingA;
+        default:
+          return 0;
       }
     });
 
@@ -193,16 +202,17 @@ const AccommodationPage: React.FC = () => {
           ))}
             <div className="ml-4 flex items-center space-x-2">
               <span className="text-sm font-medium text-gray-700">Sort:</span>
-              <button
-                onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : sortOrder === 'desc' ? 'none' : 'asc')}
-                className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
-                  sortOrder !== 'none'
-                    ? 'bg-green-600 text-white'
-                    : 'bg-white text-gray-600 hover:bg-green-50 border border-gray-200'
-                }`}
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as any)}
+                className="px-3 py-1 rounded-lg text-sm border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-200"
               >
-                Price {sortOrder === 'asc' ? '↑' : sortOrder === 'desc' ? '↓' : '↕'}
-              </button>
+                <option value="none">Default</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="rating-asc">Rating: Low to High</option>
+                <option value="rating-desc">Rating: High to Low</option>
+              </select>
             </div>
           </div>
           
@@ -281,7 +291,7 @@ const AccommodationPage: React.FC = () => {
                 {item.location}
               </div>
               
-              <p className="text-gray-600 text-sm mb-4 line-clamp-2">{item.description}</p>
+              <p className="text-gray-600 text-sm mb-4 line-clamp-2">{(item as any).description}</p>
               
               {activeTab === 'hotels' && (
                 <div className="mb-4">
@@ -293,7 +303,7 @@ const AccommodationPage: React.FC = () => {
               
               <div className="flex items-center justify-between">
                 <div className="text-green-600 font-semibold">
-                  {activeTab === 'hotels' ? `₹${(item as any).price}` : `₹${(item as any).price}`}
+                  {activeTab === 'hotels' ? `₹${(item as any).price}` : (item as any).priceRange}
                   {activeTab === 'hotels' && <span className="text-sm text-gray-500">/night</span>}
                 </div>
                 <button className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors">
