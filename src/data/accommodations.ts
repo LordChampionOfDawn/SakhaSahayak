@@ -48,7 +48,8 @@ export const accommodations = {
         { user: "Priya Sharma", rating: 4, comment: "Clean rooms and friendly staff." }
       ],
       location: "Mussoorie",
-      description: "Comfortable hotel with stunning mountain views and excellent amenities."
+      description: "Comfortable hotel with stunning mountain views and excellent amenities.",
+      coordinates: [30.4598, 78.0664]
     },
     {
       id: 2,
@@ -63,7 +64,8 @@ export const accommodations = {
         { user: "Neha Gupta", rating: 4, comment: "Beautiful location with great facilities." }
       ],
       location: "Nainital",
-      description: "Luxury retreat offering breathtaking lake views and premium amenities."
+      description: "Luxury retreat offering breathtaking lake views and premium amenities.",
+      coordinates: [29.3803, 79.4636]
     },
     {
       id: 3,
@@ -78,7 +80,8 @@ export const accommodations = {
         { user: "Sunita Devi", rating: 4, comment: "Good value for money, peaceful location." }
       ],
       location: "Rishikesh",
-      description: "Budget-friendly lodge with river views and spiritual atmosphere."
+      description: "Budget-friendly lodge with river views and spiritual atmosphere.",
+      coordinates: [30.0869, 78.2676]
     },
     {
       id: 4,
@@ -93,7 +96,8 @@ export const accommodations = {
         { user: "Kavita Rani", rating: 4, comment: "Peaceful location with excellent yoga facilities." }
       ],
       location: "Haridwar",
-      description: "Luxury resort perfect for spiritual retreats with Ganga river views."
+      description: "Luxury resort perfect for spiritual retreats with Ganga river views.",
+      coordinates: [29.9457, 78.1642]
     },
     {
       id: 5,
@@ -108,7 +112,8 @@ export const accommodations = {
         { user: "Meera Jain", rating: 4, comment: "Cozy atmosphere and good food." }
       ],
       location: "Almora",
-      description: "Charming hotel nestled among pine forests with nature activities."
+      description: "Charming hotel nestled among pine forests with nature activities.",
+      coordinates: [29.5971, 79.6593]
     },
     {
       id: 6,
@@ -123,7 +128,8 @@ export const accommodations = {
         { user: "Anita Singh", rating: 3, comment: "Good for budget travelers, convenient location." }
       ],
       location: "Dehradun",
-      description: "Affordable accommodation in the heart of Dehradun city."
+      description: "Affordable accommodation in the heart of Dehradun city.",
+      coordinates: [30.3165, 78.0322]
     },
     {
       id: 7,
@@ -138,7 +144,8 @@ export const accommodations = {
         { user: "Ritu Agarwal", rating: 5, comment: "Exceptional service and breathtaking views." }
       ],
       location: "Auli",
-      description: "Ultra-luxury mountain retreat with world-class amenities and service."
+      description: "Ultra-luxury mountain retreat with world-class amenities and service.",
+      coordinates: [30.5358, 79.5660]
     },
     {
       id: 8,
@@ -153,7 +160,8 @@ export const accommodations = {
         { user: "Pooja Verma", rating: 5, comment: "Beautiful riverside location with great activities." }
       ],
       location: "Jim Corbett",
-      description: "Cozy cottage with direct river access and adventure activities."
+      description: "Cozy cottage with direct river access and adventure activities.",
+      coordinates: [29.5316, 78.9463]
     }
   ],
   restaurants: [
@@ -171,7 +179,8 @@ export const accommodations = {
       ],
       specialties: ["Garhwali Thali", "Kafuli", "Chainsoo"],
       location: "Dehradun",
-      description: "Authentic Garhwali cuisine with traditional flavors and local ingredients."
+      description: "Authentic Garhwali cuisine with traditional flavors and local ingredients.",
+      coordinates: [30.3165, 78.0322]
     },
     {
       id: 2,
@@ -187,7 +196,8 @@ export const accommodations = {
       ],
       specialties: ["Coffee", "Continental Breakfast", "Lake View Dining"],
       location: "Nainital",
-      description: "Multi-cuisine café offering stunning lake views and excellent coffee."
+      description: "Multi-cuisine café offering stunning lake views and excellent coffee.",
+      coordinates: [29.3803, 79.4636]
     },
     {
       id: 3,
@@ -203,7 +213,8 @@ export const accommodations = {
       ],
       specialties: ["Butter Chicken", "Dal Makhani", "Tandoori Items"],
       location: "Mussoorie",
-      description: "Premium Indian restaurant with authentic North Indian flavors."
+      description: "Premium Indian restaurant with authentic North Indian flavors.",
+      coordinates: [30.4598, 78.0664]
     },
     {
       id: 4,
@@ -219,7 +230,8 @@ export const accommodations = {
       ],
       specialties: ["Hakka Noodles", "Manchurian", "Sweet & Sour"],
       location: "Rishikesh",
-      description: "Popular Chinese restaurant with authentic flavors and quick service."
+      description: "Popular Chinese restaurant with authentic flavors and quick service.",
+      coordinates: [30.0869, 78.2676]
     },
     {
       id: 5,
@@ -235,7 +247,8 @@ export const accommodations = {
       ],
       specialties: ["Wood-fired Pizza", "Pasta Carbonara", "Tiramisu"],
       location: "Mussoorie",
-      description: "Authentic Italian restaurant with wood-fired pizzas and mountain views."
+      description: "Authentic Italian restaurant with wood-fired pizzas and mountain views.",
+      coordinates: [30.4598, 78.0664]
     },
     {
       id: 6,
@@ -251,7 +264,8 @@ export const accommodations = {
       ],
       specialties: ["Rajma Chawal", "Chole Bhature", "Lassi"],
       location: "Almora",
-      description: "Traditional dhaba serving hearty Punjabi meals with mountain views."
+      description: "Traditional dhaba serving hearty Punjabi meals with mountain views.",
+      coordinates: [29.5971, 79.6593]
     },
     {
       id: 7,
@@ -267,7 +281,8 @@ export const accommodations = {
       ],
       specialties: ["Tandoori Platter", "Continental Fusion", "Dessert Selection"],
       location: "Auli",
-      description: "Fine dining restaurant offering multi-cuisine delicacies with premium service."
+      description: "Fine dining restaurant offering multi-cuisine delicacies with premium service.",
+      coordinates: [30.5358, 79.5660]
     },
     {
       id: 8,
@@ -283,7 +298,8 @@ export const accommodations = {
       ],
       specialties: ["Organic Salads", "Herbal Teas", "Farm-to-Table Meals"],
       location: "Jim Corbett",
-      description: "Eco-friendly café serving organic meals in a beautiful forest setting."
+      description: "Eco-friendly café serving organic meals in a beautiful forest setting.",
+      coordinates: [29.5316, 78.9463]
     }
   ]
 };

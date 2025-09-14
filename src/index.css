@@ -66,6 +66,29 @@
   animation: fadeInUp 0.6s ease-out;
 }
 
+/* Leaflet map custom styles */
+.leaflet-container {
+  font-family: inherit;
+}
+
+.custom-popup .leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.custom-popup .leaflet-popup-content {
+  margin: 0;
+  padding: 0;
+}
+
+.hotel-marker {
+  filter: hue-rotate(200deg);
+}
+
+.restaurant-marker {
+  filter: hue-rotate(30deg);
+}
+
 /* Enhanced hover effects */
 .hover-lift {
   transition: all 0.3s ease;
