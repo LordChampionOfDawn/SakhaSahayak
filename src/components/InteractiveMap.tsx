@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MapPin, Hotel, Utensils, Phone, Eye, EyeOff } from 'lucide-react';
+import MapView from './MapView';
 
 interface MapLocation {
   id: number;
@@ -76,48 +77,7 @@ const InteractiveMap: React.FC = () => {
       </div>
 
       {/* Map Container */}
-      <div className="relative h-96 bg-gradient-to-br from-green-100 to-blue-100">
-        {/* Placeholder for actual map - would integrate with Google Maps or OpenStreetMap */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-600 mb-2">Interactive Map Integration</p>
-            <p className="text-sm text-gray-500">Google Maps or OpenStreetMap would be integrated here</p>
-          </div>
-        </div>
-
-        {/* Mock location markers */}
-        {filteredLocations.map((location) => {
-          const category = categories.find(cat => cat.id === location.type);
-          if (!category) return null;
-          
-          const Icon = category.icon;
-          
-          return (
-            <div
-              key={location.id}
-              className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group"
-              style={{
-                left: `${20 + (location.id * 15) % 60}%`,
-                top: `${20 + (location.id * 10) % 60}%`,
-              }}
-            >
-              <div className={`p-2 rounded-full ${category.color} shadow-lg group-hover:scale-110 transition-transform`}>
-                <Icon className="h-4 w-4" />
-              </div>
-              
-              {/* Tooltip */}
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <div className="bg-black text-white text-xs rounded-lg px-2 py-1 whitespace-nowrap">
-                  <div className="font-medium">{location.name}</div>
-                  <div className="text-gray-300">{location.description}</div>
-                </div>
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-black"></div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <MapView />
 
       {/* Location List */}
       <div className="p-6">
