@@ -321,24 +321,19 @@ const TouristGuidePage: React.FC = () => {
                 <div className="text-sm text-gray-500">
                   Best time: {place.bestTime}
                 </div>
-                <button 
-                  onClick={() => setSelectedPlace(place)}
-                  className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors flex items-center"
-                >
-                  <Shield className="h-4 w-4 mr-1" />
-                  Safety Info
-                </button>
-              </div>
-              
-              {/* Quick Safety Status */}
-              <div className="mt-3 flex items-center justify-between text-xs">
-                <div className="flex items-center text-green-600">
-                  <CheckCircle className="h-3 w-3 mr-1" />
-                  <span>Currently Safe</span>
-                </div>
-                <div className="flex items-center text-blue-600">
-                  <Heart className="h-3 w-3 mr-1" />
-                  <span>Medical: 2km</span>
+                <div className="flex space-x-2">
+                  <button 
+                    onClick={() => setSelectedPlace(place)}
+                    className="bg-blue-600 text-white px-3 py-1 rounded-lg text-xs font-medium hover:bg-blue-700 transition-colors"
+                  >
+                    Learn More
+                  </button>
+                  <button 
+                    onClick={() => setSelectedPlace(place)}
+                    className="bg-red-600 text-white px-3 py-1 rounded-lg text-xs font-medium hover:bg-red-700 transition-colors"
+                  >
+                    Safety Info
+                  </button>
                 </div>
               </div>
             </div>
@@ -363,28 +358,6 @@ const TouristGuidePage: React.FC = () => {
           onClose={() => setSelectedPlace(null)} 
         />
       )}
-
-      {/* Smart Recommendations Panel */}
-      <div className="mt-8 bg-gradient-to-r from-purple-50 to-blue-50 rounded-2xl p-6 border border-purple-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-          <Activity className="h-5 w-5 text-purple-600 mr-2" />
-          AI-Powered Safety Recommendations
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white p-4 rounded-lg">
-            <h4 className="font-medium text-gray-900 mb-2">Best Time to Visit</h4>
-            <p className="text-sm text-gray-600">Based on current weather and crowd analysis</p>
-          </div>
-          <div className="bg-white p-4 rounded-lg">
-            <h4 className="font-medium text-gray-900 mb-2">Safety Equipment</h4>
-            <p className="text-sm text-gray-600">Recommended gear for your selected destinations</p>
-          </div>
-          <div className="bg-white p-4 rounded-lg">
-            <h4 className="font-medium text-gray-900 mb-2">Group vs Solo</h4>
-            <p className="text-sm text-gray-600">Personalized safety advice for your travel style</p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

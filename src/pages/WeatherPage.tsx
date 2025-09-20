@@ -133,23 +133,6 @@ const WeatherPage: React.FC = () => {
         </p>
       </div>
 
-      {/* Travel Impact Alert */}
-      <div className="mb-8 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl p-6 border border-yellow-200">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="bg-yellow-500 p-3 rounded-full">
-              <AlertTriangle className="h-6 w-6 text-white" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-yellow-900">Travel Impact Forecast</h3>
-              <p className="text-yellow-700">Light rain expected in Nainital region • Consider flexible booking options</p>
-            </div>
-          </div>
-          <button className="bg-yellow-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-yellow-600 transition-colors">
-            View Alternatives
-          </button>
-        </div>
-      </div>
       {/* City Selection */}
       <div className="mb-8">
         <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -205,36 +188,6 @@ const WeatherPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Booking Impact Analysis */}
-          <div className="bg-white rounded-2xl p-6 shadow-lg mb-8">
-            <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-              <Calendar className="h-5 w-5 text-blue-600 mr-2" />
-              Booking Recommendations
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-                <div className="flex items-center mb-2">
-                  <Shield className="h-4 w-4 text-green-600 mr-2" />
-                  <span className="font-medium text-green-900">Outdoor Activities</span>
-                </div>
-                <p className="text-sm text-green-700">Perfect conditions for trekking and sightseeing</p>
-              </div>
-              <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-                <div className="flex items-center mb-2">
-                  <AlertTriangle className="h-4 w-4 text-yellow-600 mr-2" />
-                  <span className="font-medium text-yellow-900">Hotel Bookings</span>
-                </div>
-                <p className="text-sm text-yellow-700">Consider flexible cancellation policies</p>
-              </div>
-              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                <div className="flex items-center mb-2">
-                  <MapPin className="h-4 w-4 text-blue-600 mr-2" />
-                  <span className="font-medium text-blue-900">Transportation</span>
-                </div>
-                <p className="text-sm text-blue-700">All routes clear, normal travel times expected</p>
-              </div>
-            </div>
-          </div>
           {/* Weather Details */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="bg-white rounded-2xl p-6 shadow-lg">
@@ -287,7 +240,7 @@ const WeatherPage: React.FC = () => {
       <div className="bg-white rounded-2xl p-8 shadow-lg mb-8">
         <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
           <Thermometer className="h-5 w-5 text-purple-600 mr-2" />
-          Smart Travel Planning
+          Travel Planning Tips
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {weatherTips.map((tip, index) => {
@@ -302,63 +255,6 @@ const WeatherPage: React.FC = () => {
               </div>
             );
           })}
-        </div>
-      </div>
-
-      {/* Emergency Weather Protocols */}
-      <div className="bg-red-50 border border-red-200 rounded-2xl p-6 mb-8">
-        <div className="flex items-start space-x-3">
-          <div className="bg-red-100 p-2 rounded-lg flex-shrink-0">
-            <Phone className="h-6 w-6 text-red-600" />
-          </div>
-          <div>
-            <h3 className="font-semibold text-red-800 mb-2">Emergency Weather Protocols</h3>
-            <p className="text-sm text-red-700 mb-3">
-              In case of severe weather during your trip, follow these emergency procedures and contact information.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div>
-                <h4 className="font-medium text-red-800 mb-1">Immediate Actions:</h4>
-                <ul className="text-red-700 space-y-1">
-                  <li>• Seek immediate shelter</li>
-                  <li>• Contact your accommodation</li>
-                  <li>• Inform family of your status</li>
-                  <li>• Monitor official weather updates</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-medium text-red-800 mb-1">Emergency Contacts:</h4>
-                <ul className="text-red-700 space-y-1">
-                  <li>• Disaster Management: 1070</li>
-                  <li>• Tourist Helpline: 1363</li>
-                  <li>• Emergency Services: 112</li>
-                  <li>• Weather Updates: 1588</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Flexible Booking Options */}
-      <div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-2xl p-6 border border-blue-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-          <Shield className="h-5 w-5 text-blue-600 mr-2" />
-          Weather-Safe Booking Options
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white p-4 rounded-lg">
-            <h4 className="font-medium text-gray-900 mb-2">Flexible Cancellation</h4>
-            <p className="text-sm text-gray-600">Free cancellation up to 24 hours for weather-related issues</p>
-          </div>
-          <div className="bg-white p-4 rounded-lg">
-            <h4 className="font-medium text-gray-900 mb-2">Alternative Suggestions</h4>
-            <p className="text-sm text-gray-600">Automatic recommendations for indoor activities during bad weather</p>
-          </div>
-          <div className="bg-white p-4 rounded-lg">
-            <h4 className="font-medium text-gray-900 mb-2">Weather Insurance</h4>
-            <p className="text-sm text-gray-600">Optional coverage for weather-related trip disruptions</p>
-          </div>
         </div>
       </div>
     </div>

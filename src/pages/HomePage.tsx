@@ -1,67 +1,52 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Bed, Bus, CloudRain, AlertTriangle, Camera, Star, Users, Phone, Calendar, Shield, CheckCircle, Thermometer, Heart } from 'lucide-react';
+import { MapPin, Bed, Bus, CloudRain, AlertTriangle, Calendar } from 'lucide-react';
 import InteractiveMap from '../components/InteractiveMap';
 import TypingAnimation from '../components/TypingAnimation';
-import { eventsData } from '../data/eventsData';
 
 const HomePage: React.FC = () => {
   const quickActions = [
     {
-      title: 'Safety Briefing',
-      description: 'Pre-travel safety checklist',
-      icon: Shield,
-      path: '/safety-briefing',
-      color: 'from-red-500 to-pink-600',
-    },
-    {
       title: 'Tourist Guide',
-      description: 'Discover places with safety info',
+      description: 'Discover amazing places',
       icon: MapPin,
       path: '/guide',
       color: 'from-green-500 to-emerald-600',
     },
     {
       title: 'Stay & Dine',
-      description: 'Safe accommodation & dining',
+      description: 'Hotels and restaurants',
       icon: Bed,
       path: '/accommodation',
       color: 'from-blue-500 to-cyan-600',
     },
     {
       title: 'Transportation',
-      description: 'Safe travel planning',
+      description: 'Travel options',
       icon: Bus,
       path: '/transportation',
       color: 'from-orange-500 to-amber-600',
     },
     {
-      title: 'Weather Alerts',
-      description: 'Weather & safety updates',
+      title: 'Weather',
+      description: 'Weather updates',
       icon: CloudRain,
       path: '/weather',
       color: 'from-purple-500 to-violet-600',
     },
     {
-      title: 'Emergency Contacts',
-      description: 'Quick emergency access',
-      icon: AlertTriangle,
-      path: '/disaster',
-      color: 'from-red-500 to-pink-600',
-    },
-    {
       title: 'Events & Festivals',
-      description: 'Safe cultural experiences',
+      description: 'Cultural experiences',
       icon: Calendar,
       path: '/events',
       color: 'from-purple-500 to-indigo-600',
     },
     {
-      title: 'Travel Insurance',
-      description: 'Safety-focused coverage',
-      icon: Heart,
-      path: '/insurance',
-      color: 'from-green-500 to-teal-600',
+      title: 'Emergency SOS',
+      description: 'Emergency assistance',
+      icon: AlertTriangle,
+      path: '/disaster',
+      color: 'from-red-500 to-pink-600',
     },
   ];
 
@@ -75,102 +60,22 @@ const HomePage: React.FC = () => {
           <div className="max-w-4xl mx-auto text-center">
             <TypingAnimation />
             <p className="text-lg md:text-xl text-green-100 mb-4 max-w-2xl mx-auto">
-              Your ultimate companion for safe exploration of the "Land of Gods" - from majestic Himalayas to spiritual ghats.
-            </p>
-            <p className="text-md text-green-200 mb-8 font-semibold">
-              Book Smart, Travel Safe in Uttarakhand
+              Your ultimate companion for exploring the "Land of Gods" - from majestic Himalayas to spiritual ghats.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/guide"
-                className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
+                className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
               >
-                <Shield className="h-5 w-5 mr-2" />
                 Explore Destinations
               </Link>
               <Link
                 to="/disaster"
-                className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center"
+                className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300"
               >
-                <AlertTriangle className="h-5 w-5 mr-2" />
-                Safety Center
+                Emergency SOS
               </Link>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Safety Status Banner */}
-      <div className="bg-gradient-to-r from-orange-100 to-red-100 border-l-4 border-orange-500 px-4 py-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="bg-orange-500 p-2 rounded-full">
-                <Thermometer className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-orange-900">Current Safety Status</h3>
-                <p className="text-orange-700 text-sm">Weather conditions favorable • No active disaster alerts • All major routes open</p>
-              </div>
-            </div>
-            <Link
-              to="/weather"
-              className="bg-orange-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-orange-600 transition-colors"
-            >
-              View Details
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Quick Safety Check */}
-      <div className="px-4 py-12 max-w-7xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
-          Plan Safe Travel
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            { destination: 'Rishikesh', status: 'Safe', condition: 'Clear weather, normal conditions', color: 'text-green-600 bg-green-100' },
-            { destination: 'Nainital', status: 'Caution', condition: 'Light rain expected, carry umbrella', color: 'text-yellow-600 bg-yellow-100' },
-            { destination: 'Kedarnath', status: 'Safe', condition: 'Good trekking conditions', color: 'text-green-600 bg-green-100' }
-          ].map((item, index) => (
-            <div key={index} className="bg-white rounded-2xl p-6 shadow-lg">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-semibold text-gray-900">{item.destination}</h3>
-                <span className={`px-3 py-1 rounded-full text-sm font-medium ${item.color}`}>
-                  {item.status}
-                </span>
-              </div>
-              <p className="text-gray-600 text-sm">{item.condition}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Emergency Preparedness */}
-      <div className="bg-blue-50 px-4 py-12">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
-            Travel Smart - Safety Checklist
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { icon: CheckCircle, title: 'Emergency Contacts', tip: 'Save local emergency numbers' },
-              { icon: Shield, title: 'Travel Insurance', tip: 'Get comprehensive coverage' },
-              { icon: Phone, title: 'Communication Plan', tip: 'Share itinerary with family' },
-              { icon: Heart, title: 'Health Checkup', tip: 'Ensure fitness for activities' }
-            ].map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <div key={index} className="bg-white rounded-2xl p-6 text-center shadow-lg">
-                  <div className="bg-blue-100 p-3 rounded-full inline-flex mb-4">
-                    <Icon className="h-6 w-6 text-blue-600" />
-                  </div>
-                  <h3 className="font-semibold text-gray-900 mb-2">{item.title}</h3>
-                  <p className="text-gray-600 text-sm">{item.tip}</p>
-                </div>
-              );
-            })}
           </div>
         </div>
       </div>
@@ -178,28 +83,24 @@ const HomePage: React.FC = () => {
       {/* Quick Actions */}
       <div className="px-4 py-12 max-w-7xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
-          Integrated Booking + Safety
+          Explore Uttarakhand
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {quickActions.map((action) => {
             const Icon = action.icon;
             return (
               <Link
                 key={action.path}
                 to={action.path}
-                className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
+                className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 border border-gray-100"
               >
                 <div className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${action.color} text-white mb-4`}>
                   <Icon className="h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-green-600 transition-colors">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 transition-colors">
                   {action.title}
                 </h3>
                 <p className="text-gray-600">{action.description}</p>
-                <div className="mt-3 flex items-center text-sm text-green-600">
-                  <Shield className="h-4 w-4 mr-1" />
-                  <span>Safety Integrated</span>
-                </div>
               </Link>
             );
           })}
@@ -209,7 +110,7 @@ const HomePage: React.FC = () => {
       {/* Interactive Map Section */}
       <div className="px-4 py-12 max-w-7xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
-          Explore Locations
+          Interactive Map
         </h2>
         <InteractiveMap />
       </div>
@@ -246,120 +147,6 @@ const HomePage: React.FC = () => {
         </div>
       </div>
 
-      {/* Events & Festivals Section */}
-      <div className="px-4 py-12 max-w-7xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
-          Safe Cultural Experiences
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {eventsData.slice(0, 6).map((event) => (
-            <div
-              key={event.id}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-            >
-              <div className="relative h-48">
-                <img 
-                  src={event.image} 
-                  alt={event.name}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-black/20"></div>
-                <div className="absolute top-4 right-4">
-                  <span className="bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium text-gray-700">
-                    {event.category}
-                  </span>
-                </div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-white text-lg font-semibold mb-1">{event.name}</h3>
-                  <div className="flex items-center text-white/90 text-sm">
-                    <MapPin className="h-4 w-4 mr-1" />
-                    {event.location}
-                  </div>
-                </div>
-              </div>
-              
-              <div className="p-6">
-                <p className="text-gray-600 mb-4 line-clamp-3">{event.description}</p>
-                
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center text-sm text-gray-500">
-                    <Calendar className="h-4 w-4 mr-1" />
-                    {event.timing}
-                  </div>
-                  <div className="flex items-center text-sm text-green-600">
-                    <Shield className="h-4 w-4 mr-1" />
-                    <span>Safety Protocols Active</span>
-                  </div>
-                </div>
-                
-                <div className="mb-4">
-                  <div className="flex flex-wrap gap-2">
-                    {event.highlights.slice(0, 2).map((highlight, index) => (
-                      <span
-                        key={index}
-                        className="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs"
-                      >
-                        {highlight}
-                      </span>
-                    ))}
-                    {event.highlights.length > 2 && (
-                      <span className="text-xs text-gray-500">+{event.highlights.length - 2} more</span>
-                    )}
-                  </div>
-                </div>
-                
-                <button className="w-full bg-purple-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-purple-700 transition-colors">
-                  View Safety Info
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Emergency Section */}
-      <div className="px-4 py-8 max-w-7xl mx-auto">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Emergency Contacts</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          {[
-            { title: 'Emergency Services', number: '112', type: 'All emergencies' },
-            { title: 'Tourist Helpline', number: '1363', type: 'Tourist assistance' },
-            { title: 'Disaster Management', number: '1070', type: 'Disaster response' }
-          ].map((contact, index) => (
-            <div key={index} className="bg-white border border-red-200 rounded-xl p-4">
-              <div className="flex items-center space-x-3">
-                <div className="bg-red-100 p-2 rounded-full">
-                  <Phone className="h-5 w-5 text-red-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 text-sm">{contact.title}</h3>
-                  <p className="text-xs text-gray-600">{contact.type}</p>
-                  <p className="text-red-600 font-bold">{contact.number}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="bg-red-50 border border-red-200 rounded-2xl p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="bg-red-100 p-3 rounded-full">
-                <AlertTriangle className="h-6 w-6 text-red-600" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Emergency SOS</h3>
-                <p className="text-sm text-gray-600">Quick access to emergency assistance</p>
-              </div>
-            </div>
-            <Link
-              to="/disaster"
-              className="bg-red-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-700 transition-colors"
-            >
-              SOS
-            </Link>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

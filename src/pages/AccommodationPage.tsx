@@ -20,9 +20,6 @@ const AccommodationPage: React.FC = () => {
     { id: 'budget', name: 'Budget' },
     { id: 'mid-range', name: 'Mid-range' },
     { id: 'luxury', name: 'Luxury' },
-    { id: 'emergency-prepared', name: 'Emergency Prepared' },
-    { id: 'medical-nearby', name: 'Medical Facilities Nearby' },
-    { id: 'safe-zone', name: 'Safe Zone Locations' },
   ];
 
   const cuisineFilters = [
@@ -296,40 +293,6 @@ const AccommodationPage: React.FC = () => {
               
               <p className="text-gray-600 text-sm mb-4 line-clamp-2">{(item as any).description}</p>
               
-              {/* Safety Information */}
-              <div className="mb-4 p-3 bg-green-50 rounded-lg">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center">
-                    <Shield className="h-4 w-4 text-green-600 mr-1" />
-                    <span className="text-sm font-medium text-green-800">Safety Rating</span>
-                  </div>
-                  <div className="flex items-center">
-                    {[...Array(4)].map((_, i) => (
-                      <Star key={i} className="h-3 w-3 text-green-500 fill-current" />
-                    ))}
-                    <span className="text-xs text-green-600 ml-1">4.2/5</span>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="flex items-center text-green-700">
-                    <CheckCircle className="h-3 w-3 mr-1" />
-                    <span>Emergency Exits</span>
-                  </div>
-                  <div className="flex items-center text-green-700">
-                    <Heart className="h-3 w-3 mr-1" />
-                    <span>First Aid Available</span>
-                  </div>
-                  <div className="flex items-center text-green-700">
-                    <Phone className="h-3 w-3 mr-1" />
-                    <span>24/7 Security</span>
-                  </div>
-                  <div className="flex items-center text-green-700">
-                    <AlertTriangle className="h-3 w-3 mr-1" />
-                    <span>Disaster Ready</span>
-                  </div>
-                </div>
-              </div>
-
               {activeTab === 'hotels' && (
                 <div className="mb-4">
                   {renderAmenities(item.amenities || [])}
@@ -343,18 +306,14 @@ const AccommodationPage: React.FC = () => {
                   {activeTab === 'hotels' ? `₹${(item as any).price}` : (item as any).priceRange}
                   {activeTab === 'hotels' && <span className="text-sm text-gray-500">/night</span>}
                 </div>
-                <button className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors flex items-center">
-                  <Shield className="h-4 w-4 mr-1" />
-                  {activeTab === 'hotels' ? 'Safe Book' : 'Safe Reserve'}
-                </button>
-              </div>
-              
-              {/* Safety Briefing Notice */}
-              <div className="mt-3 p-2 bg-blue-50 rounded-lg">
-                <p className="text-xs text-blue-700 flex items-center">
-                  <AlertTriangle className="h-3 w-3 mr-1" />
-                  Safety briefing included with booking • Emergency contacts shared automatically
-                </p>
+                <div className="flex space-x-2">
+                  <button className="bg-blue-600 text-white px-3 py-1 rounded-lg text-xs font-medium hover:bg-blue-700 transition-colors">
+                    Learn More
+                  </button>
+                  <button className="bg-red-600 text-white px-3 py-1 rounded-lg text-xs font-medium hover:bg-red-700 transition-colors">
+                    Safety Info
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -372,43 +331,6 @@ const AccommodationPage: React.FC = () => {
           </div>
         </div>
       )}
-
-      {/* Safety Information Panel */}
-      <div className="mt-8 bg-gradient-to-r from-blue-50 to-green-50 rounded-2xl p-6 border border-blue-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-          <Shield className="h-5 w-5 text-blue-600 mr-2" />
-          Safety-First Booking
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="flex items-start space-x-3">
-            <div className="bg-blue-100 p-2 rounded-lg flex-shrink-0">
-              <CheckCircle className="h-5 w-5 text-blue-600" />
-            </div>
-            <div>
-              <h4 className="font-medium text-gray-900">Safety Verification</h4>
-              <p className="text-sm text-gray-600">All properties verified for emergency preparedness</p>
-            </div>
-          </div>
-          <div className="flex items-start space-x-3">
-            <div className="bg-green-100 p-2 rounded-lg flex-shrink-0">
-              <Heart className="h-5 w-5 text-green-600" />
-            </div>
-            <div>
-              <h4 className="font-medium text-gray-900">Medical Access</h4>
-              <p className="text-sm text-gray-600">Quick access to nearby medical facilities</p>
-            </div>
-          </div>
-          <div className="flex items-start space-x-3">
-            <div className="bg-purple-100 p-2 rounded-lg flex-shrink-0">
-              <Phone className="h-5 w-5 text-purple-600" />
-            </div>
-            <div>
-              <h4 className="font-medium text-gray-900">24/7 Support</h4>
-              <p className="text-sm text-gray-600">Round-the-clock emergency assistance</p>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
