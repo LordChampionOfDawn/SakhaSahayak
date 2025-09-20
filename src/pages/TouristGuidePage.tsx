@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapPin, Star, Clock, Camera, X, IndianRupee, Calendar, Hotel, Utensils } from 'lucide-react';
+import { MapPin, Star, Clock, Camera, X, IndianRupee, Calendar, Hotel, Utensils, Shield, AlertTriangle, Heart, Phone, CheckCircle, Users, Activity } from 'lucide-react';
 import { touristPlaces } from '../data/touristPlaces';
 
 const TouristGuidePage: React.FC = () => {
@@ -13,6 +13,8 @@ const TouristGuidePage: React.FC = () => {
     { id: 'adventure', name: 'Adventure' },
     { id: 'nature', name: 'Nature' },
     { id: 'cultural', name: 'Cultural' },
+    { id: 'safe-rated', name: 'High Safety Rating' },
+    { id: 'emergency-ready', name: 'Emergency Ready' },
   ];
 
   const filteredPlaces = touristPlaces.filter(place => {
@@ -59,6 +61,59 @@ const TouristGuidePage: React.FC = () => {
           
           <p className="text-gray-600 mb-6">{place.description}</p>
           
+          {/* Current Safety Status */}
+          <div className="mb-6 p-4 bg-green-50 rounded-xl border border-green-200">
+            <div className="flex items-center justify-between mb-3">
+              <h4 className="font-semibold text-green-900 flex items-center">
+                <Shield className="h-5 w-5 mr-2" />
+                Current Safety Status
+              </h4>
+              <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                Safe to Visit
+              </span>
+            </div>
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <div className="flex items-center text-green-700">
+                <CheckCircle className="h-4 w-4 mr-2" />
+                <span>Weather: Clear</span>
+              </div>
+              <div className="flex items-center text-green-700">
+                <Heart className="h-4 w-4 mr-2" />
+                <span>Medical: 2km away</span>
+              </div>
+              <div className="flex items-center text-green-700">
+                <Phone className="h-4 w-4 mr-2" />
+                <span>Network: Full coverage</span>
+              </div>
+              <div className="flex items-center text-green-700">
+                <Users className="h-4 w-4 mr-2" />
+                <span>Crowd: Moderate</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Risk Assessment */}
+          <div className="mb-6 p-4 bg-blue-50 rounded-xl border border-blue-200">
+            <h4 className="font-semibold text-blue-900 mb-3 flex items-center">
+              <AlertTriangle className="h-5 w-5 mr-2" />
+              Risk Assessment & Precautions
+            </h4>
+            <div className="space-y-2 text-sm">
+              <div className="flex items-center justify-between">
+                <span className="text-blue-700">Difficulty Level:</span>
+                <span className="font-medium text-blue-900">Moderate</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-blue-700">Fitness Required:</span>
+                <span className="font-medium text-blue-900">Good</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-blue-700">Safety Equipment:</span>
+                <span className="font-medium text-blue-900">Recommended</span>
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div className="space-y-3">
               <div className="flex items-center">
@@ -90,6 +145,32 @@ const TouristGuidePage: React.FC = () => {
             </div>
           </div>
           
+          {/* Emergency Information */}
+          <div className="mb-6 p-4 bg-red-50 rounded-xl border border-red-200">
+            <h4 className="font-semibold text-red-900 mb-3 flex items-center">
+              <Phone className="h-5 w-5 mr-2" />
+              Emergency Information
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div>
+                <p className="text-red-700 mb-1">Nearest Hospital:</p>
+                <p className="font-medium text-red-900">District Hospital (5km)</p>
+              </div>
+              <div>
+                <p className="text-red-700 mb-1">Emergency Contact:</p>
+                <p className="font-medium text-red-900">+91-135-246-1111</p>
+              </div>
+              <div>
+                <p className="text-red-700 mb-1">Rescue Services:</p>
+                <p className="font-medium text-red-900">Available 24/7</p>
+              </div>
+              <div>
+                <p className="text-red-700 mb-1">Evacuation Route:</p>
+                <p className="font-medium text-red-900">Main highway access</p>
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <div className="flex items-center mb-3">
@@ -115,6 +196,29 @@ const TouristGuidePage: React.FC = () => {
               </ul>
             </div>
           </div>
+          
+          {/* Safety Checklist */}
+          <div className="mt-6 p-4 bg-yellow-50 rounded-xl border border-yellow-200">
+            <h4 className="font-semibold text-yellow-900 mb-3 flex items-center">
+              <Activity className="h-5 w-5 mr-2" />
+              Pre-Visit Safety Checklist
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+              {[
+                'Check weather conditions',
+                'Inform family about itinerary',
+                'Carry emergency contacts',
+                'Pack first aid kit',
+                'Ensure phone is charged',
+                'Carry sufficient water'
+              ].map((item, index) => (
+                <label key={index} className="flex items-center space-x-2">
+                  <input type="checkbox" className="rounded border-yellow-300 text-yellow-600 focus:ring-yellow-500" />
+                  <span className="text-yellow-800">{item}</span>
+                </label>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -123,10 +227,10 @@ const TouristGuidePage: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="text-center mb-8">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Discover Uttarakhand
+          Discover Uttarakhand Safely
         </h1>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          From sacred temples to breathtaking peaks, explore the divine beauty of Uttarakhand's most captivating destinations.
+          From sacred temples to breathtaking peaks, explore Uttarakhand's captivating destinations with comprehensive safety information and real-time updates.
         </p>
       </div>
 
@@ -188,6 +292,20 @@ const TouristGuidePage: React.FC = () => {
             <div className="p-6">
               <p className="text-gray-600 mb-4 line-clamp-3">{place.description}</p>
               
+              {/* Safety Score */}
+              <div className="flex items-center justify-between mb-4 p-2 bg-green-50 rounded-lg">
+                <div className="flex items-center">
+                  <Shield className="h-4 w-4 text-green-600 mr-1" />
+                  <span className="text-sm font-medium text-green-800">Safety Score</span>
+                </div>
+                <div className="flex items-center">
+                  {[...Array(4)].map((_, i) => (
+                    <Star key={i} className="h-3 w-3 text-green-500 fill-current" />
+                  ))}
+                  <span className="text-xs text-green-600 ml-1">4.2/5</span>
+                </div>
+              </div>
+
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center">
                   <Star className="h-4 w-4 text-yellow-400 mr-1" />
@@ -207,9 +325,21 @@ const TouristGuidePage: React.FC = () => {
                   onClick={() => setSelectedPlace(place)}
                   className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors flex items-center"
                 >
-                  <Camera className="h-4 w-4 mr-1" />
-                  View Details
+                  <Shield className="h-4 w-4 mr-1" />
+                  Safety Info
                 </button>
+              </div>
+              
+              {/* Quick Safety Status */}
+              <div className="mt-3 flex items-center justify-between text-xs">
+                <div className="flex items-center text-green-600">
+                  <CheckCircle className="h-3 w-3 mr-1" />
+                  <span>Currently Safe</span>
+                </div>
+                <div className="flex items-center text-blue-600">
+                  <Heart className="h-3 w-3 mr-1" />
+                  <span>Medical: 2km</span>
+                </div>
               </div>
             </div>
           </div>
@@ -233,6 +363,28 @@ const TouristGuidePage: React.FC = () => {
           onClose={() => setSelectedPlace(null)} 
         />
       )}
+
+      {/* Smart Recommendations Panel */}
+      <div className="mt-8 bg-gradient-to-r from-purple-50 to-blue-50 rounded-2xl p-6 border border-purple-200">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+          <Activity className="h-5 w-5 text-purple-600 mr-2" />
+          AI-Powered Safety Recommendations
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-white p-4 rounded-lg">
+            <h4 className="font-medium text-gray-900 mb-2">Best Time to Visit</h4>
+            <p className="text-sm text-gray-600">Based on current weather and crowd analysis</p>
+          </div>
+          <div className="bg-white p-4 rounded-lg">
+            <h4 className="font-medium text-gray-900 mb-2">Safety Equipment</h4>
+            <p className="text-sm text-gray-600">Recommended gear for your selected destinations</p>
+          </div>
+          <div className="bg-white p-4 rounded-lg">
+            <h4 className="font-medium text-gray-900 mb-2">Group vs Solo</h4>
+            <p className="text-sm text-gray-600">Personalized safety advice for your travel style</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

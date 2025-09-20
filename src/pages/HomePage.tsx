@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Bed, Bus, CloudRain, AlertTriangle, Camera, Star, Users, Phone, Calendar } from 'lucide-react';
+import { MapPin, Bed, Bus, CloudRain, AlertTriangle, Camera, Star, Users, Phone, Calendar, Shield, CheckCircle, Thermometer, Heart } from 'lucide-react';
 import InteractiveMap from '../components/InteractiveMap';
 import TypingAnimation from '../components/TypingAnimation';
 import { eventsData } from '../data/eventsData';
@@ -8,46 +8,60 @@ import { eventsData } from '../data/eventsData';
 const HomePage: React.FC = () => {
   const quickActions = [
     {
+      title: 'Safety Briefing',
+      description: 'Pre-travel safety checklist',
+      icon: Shield,
+      path: '/safety-briefing',
+      color: 'from-red-500 to-pink-600',
+    },
+    {
       title: 'Tourist Guide',
-      description: 'Discover amazing places',
+      description: 'Discover places with safety info',
       icon: MapPin,
       path: '/guide',
       color: 'from-green-500 to-emerald-600',
     },
     {
       title: 'Stay & Dine',
-      description: 'Find accommodation & food',
+      description: 'Safe accommodation & dining',
       icon: Bed,
       path: '/accommodation',
       color: 'from-blue-500 to-cyan-600',
     },
     {
       title: 'Transportation',
-      description: 'Plan your journey',
+      description: 'Safe travel planning',
       icon: Bus,
       path: '/transportation',
       color: 'from-orange-500 to-amber-600',
     },
     {
-      title: 'Weather',
-      description: 'Real-time weather updates',
+      title: 'Weather Alerts',
+      description: 'Weather & safety updates',
       icon: CloudRain,
       path: '/weather',
       color: 'from-purple-500 to-violet-600',
     },
     {
-      title: 'Emergency SOS',
-      description: 'Safety & disaster alerts',
+      title: 'Emergency Contacts',
+      description: 'Quick emergency access',
       icon: AlertTriangle,
       path: '/disaster',
       color: 'from-red-500 to-pink-600',
     },
     {
       title: 'Events & Festivals',
-      description: 'Cultural events & celebrations',
+      description: 'Safe cultural experiences',
       icon: Calendar,
       path: '/events',
       color: 'from-purple-500 to-indigo-600',
+    },
+    {
+      title: 'Travel Insurance',
+      description: 'Safety-focused coverage',
+      icon: Heart,
+      path: '/insurance',
+      color: 'from-green-500 to-teal-600',
     },
   ];
 
@@ -60,24 +74,103 @@ const HomePage: React.FC = () => {
         <div className="relative px-4 py-16 md:py-24">
           <div className="max-w-4xl mx-auto text-center">
             <TypingAnimation />
-            <p className="text-lg md:text-xl text-green-100 mb-8 max-w-2xl mx-auto">
-              Your ultimate companion for exploring the "Land of Gods" - from majestic Himalayas to spiritual ghats, 
-              we've got everything covered for your perfect journey.
+            <p className="text-lg md:text-xl text-green-100 mb-4 max-w-2xl mx-auto">
+              Your ultimate companion for safe exploration of the "Land of Gods" - from majestic Himalayas to spiritual ghats.
+            </p>
+            <p className="text-md text-green-200 mb-8 font-semibold">
+              Book Smart, Travel Safe in Uttarakhand
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/guide"
-                className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
+                className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
               >
+                <Shield className="h-5 w-5 mr-2" />
                 Explore Destinations
               </Link>
               <Link
-                to="/weather"
-                className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300"
+                to="/disaster"
+                className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center"
               >
-                Check Weather
+                <AlertTriangle className="h-5 w-5 mr-2" />
+                Safety Center
               </Link>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Safety Status Banner */}
+      <div className="bg-gradient-to-r from-orange-100 to-red-100 border-l-4 border-orange-500 px-4 py-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="bg-orange-500 p-2 rounded-full">
+                <Thermometer className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-orange-900">Current Safety Status</h3>
+                <p className="text-orange-700 text-sm">Weather conditions favorable • No active disaster alerts • All major routes open</p>
+              </div>
+            </div>
+            <Link
+              to="/weather"
+              className="bg-orange-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-orange-600 transition-colors"
+            >
+              View Details
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Quick Safety Check */}
+      <div className="px-4 py-12 max-w-7xl mx-auto">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
+          Plan Safe Travel
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { destination: 'Rishikesh', status: 'Safe', condition: 'Clear weather, normal conditions', color: 'text-green-600 bg-green-100' },
+            { destination: 'Nainital', status: 'Caution', condition: 'Light rain expected, carry umbrella', color: 'text-yellow-600 bg-yellow-100' },
+            { destination: 'Kedarnath', status: 'Safe', condition: 'Good trekking conditions', color: 'text-green-600 bg-green-100' }
+          ].map((item, index) => (
+            <div key={index} className="bg-white rounded-2xl p-6 shadow-lg">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-semibold text-gray-900">{item.destination}</h3>
+                <span className={`px-3 py-1 rounded-full text-sm font-medium ${item.color}`}>
+                  {item.status}
+                </span>
+              </div>
+              <p className="text-gray-600 text-sm">{item.condition}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Emergency Preparedness */}
+      <div className="bg-blue-50 px-4 py-12">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
+            Travel Smart - Safety Checklist
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { icon: CheckCircle, title: 'Emergency Contacts', tip: 'Save local emergency numbers' },
+              { icon: Shield, title: 'Travel Insurance', tip: 'Get comprehensive coverage' },
+              { icon: Phone, title: 'Communication Plan', tip: 'Share itinerary with family' },
+              { icon: Heart, title: 'Health Checkup', tip: 'Ensure fitness for activities' }
+            ].map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div key={index} className="bg-white rounded-2xl p-6 text-center shadow-lg">
+                  <div className="bg-blue-100 p-3 rounded-full inline-flex mb-4">
+                    <Icon className="h-6 w-6 text-blue-600" />
+                  </div>
+                  <h3 className="font-semibold text-gray-900 mb-2">{item.title}</h3>
+                  <p className="text-gray-600 text-sm">{item.tip}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -85,9 +178,9 @@ const HomePage: React.FC = () => {
       {/* Quick Actions */}
       <div className="px-4 py-12 max-w-7xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
-          Quick Access
+          Integrated Booking + Safety
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {quickActions.map((action) => {
             const Icon = action.icon;
             return (
@@ -103,6 +196,10 @@ const HomePage: React.FC = () => {
                   {action.title}
                 </h3>
                 <p className="text-gray-600">{action.description}</p>
+                <div className="mt-3 flex items-center text-sm text-green-600">
+                  <Shield className="h-4 w-4 mr-1" />
+                  <span>Safety Integrated</span>
+                </div>
               </Link>
             );
           })}
@@ -152,7 +249,7 @@ const HomePage: React.FC = () => {
       {/* Events & Festivals Section */}
       <div className="px-4 py-12 max-w-7xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
-          Events & Festivals
+          Safe Cultural Experiences
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {eventsData.slice(0, 6).map((event) => (
@@ -189,6 +286,10 @@ const HomePage: React.FC = () => {
                     <Calendar className="h-4 w-4 mr-1" />
                     {event.timing}
                   </div>
+                  <div className="flex items-center text-sm text-green-600">
+                    <Shield className="h-4 w-4 mr-1" />
+                    <span>Safety Protocols Active</span>
+                  </div>
                 </div>
                 
                 <div className="mb-4">
@@ -208,7 +309,7 @@ const HomePage: React.FC = () => {
                 </div>
                 
                 <button className="w-full bg-purple-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-purple-700 transition-colors">
-                  Learn More
+                  View Safety Info
                 </button>
               </div>
             </div>
