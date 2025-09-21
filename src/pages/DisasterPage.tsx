@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AlertTriangle, Phone, MapPin, Shield, Info, Users, Clock, Guitar as Hospital, Activity } from 'lucide-react';
 import { hospitals, emergencyServices } from '../data/emergencyData';
+import DisasterMap from '../components/DisasterMap';
 
 const DisasterPage: React.FC = () => {
   const [sosClicked, setSosClicked] = useState(false);
@@ -156,6 +157,12 @@ const DisasterPage: React.FC = () => {
       </div>
 
       {/* Emergency Contacts */}
+      {/* Disaster & Safety Map */}
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">Route Planning & Safety</h2>
+        <DisasterMap />
+      </div>
+
       {/* Tabs */}
       <div className="flex flex-wrap gap-4 mb-8 justify-center">
         {tabs.map((tab) => {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MessageCircle, X, Send, Bot, User } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 interface Message {
   id: number;
@@ -10,6 +11,7 @@ interface Message {
 
 const Chatbot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
@@ -21,48 +23,16 @@ const Chatbot: React.FC = () => {
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
 
-  // Placeholder responses - In real implementation, this would connect to Google Gemini API
-  const getBotResponse = (userMessage: string): string => {
-    const lowerMessage = userMessage.toLowerCase();
-    
-    // Tourism responses
-    if (lowerMessage.includes('rishikesh') || lowerMessage.includes('yoga')) {
-      return "Rishikesh is the Yoga Capital of the World! It's perfect for spiritual retreats, river rafting, and adventure sports. Best time to visit is October to March. Would you like information about accommodations or activities there?";
-    }
-    
-    if (lowerMessage.includes('nainital') || lowerMessage.includes('lake')) {
-      return "Nainital is a beautiful hill station with the famous Naini Lake. You can enjoy boating, visit Snow View Point, and explore Mall Road. The weather is pleasant from March to June. Need help with hotels or restaurants?";
-    }
-    
-    if (lowerMessage.includes('kedarnath') || lowerMessage.includes('temple')) {
-      return "Kedarnath Temple is one of the sacred Char Dham sites. The trek is challenging but spiritually rewarding. It's open from May to October. Make sure to check weather conditions and book accommodations in advance.";
-    }
-    
-    // Safety responses
-    if (lowerMessage.includes('emergency') || lowerMessage.includes('help') || lowerMessage.includes('sos')) {
-      return "For emergencies, call 112 (All emergencies), 108 (Ambulance), or 100 (Police). Tourist helpline: 1363. Always share your location with family and carry emergency contacts. Do you need specific emergency information for any location?";
-    }
-    
-    if (lowerMessage.includes('weather') || lowerMessage.includes('rain') || lowerMessage.includes('snow')) {
-      return "Weather in Uttarakhand varies by season and altitude. Monsoon (July-September) can cause landslides. Winter (December-February) brings snow to higher altitudes. Always check weather forecasts before traveling. Which area are you planning to visit?";
-    }
-    
-    if (lowerMessage.includes('disaster') || lowerMessage.includes('landslide') || lowerMessage.includes('flood')) {
-      return "Uttarakhand is prone to landslides and flash floods, especially during monsoon. Stay updated with weather alerts, avoid river areas during heavy rain, and follow local authority guidelines. Disaster helpline: 1070. Need specific safety tips for your destination?";
-    }
-    
-    // Hotel/accommodation responses
-    if (lowerMessage.includes('hotel') || lowerMessage.includes('stay') || lowerMessage.includes('accommodation')) {
-      return "I can help you find safe accommodations! We have budget, mid-range, and luxury options across Uttarakhand. All our listed properties have safety ratings and emergency protocols. Which city are you looking for accommodation in?";
-    }
-    
-    // Transportation responses
-    if (lowerMessage.includes('transport') || lowerMessage.includes('bus') || lowerMessage.includes('taxi')) {
-      return "Transportation options include buses, trains, and taxis. For safety, choose verified operators, share your travel details with family, and check road conditions. From which city are you planning to travel?";
-    }
-    
-    // Default response
-    return "I'm here to help with tourism and safety information for Uttarakhand. You can ask me about destinations, hotels, weather, emergency contacts, or safety tips. What would you like to know?";
+  const getCurrentPage = () => {
+    const path = location.pathname;
+    if (path === '/') return 'Home';
+    if (path === '/guide') return 'Tourist Guide';
+    if (path === '/accommodation') return 'Hotels & Restaurants';
+    if (path === '/transportation') return 'Transportation';
+    if (path === '/weather') return 'Weather';
+    if (path === '/events') return 'Events & Festivals';
+    if (path === '/disaster') return 'Emergency';
+    return 'Website';
   };
 
   const handleSendMessage = async () => {
@@ -79,18 +49,42 @@ const Chatbot: React.FC = () => {
     setInputText('');
     setIsTyping(true);
 
-    // Simulate API delay
-    setTimeout(() => {
+    try {
+      const response = await fetch('http://localhost:3001/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: inputText,
+          context: {
+            page: getCurrentPage()
+          }
+        }),
+      });
+
+      const result = await response.json();
+
       const botResponse: Message = {
         id: messages.length + 2,
-        text: getBotResponse(inputText),
+        text: result.response || 'Sorry, I encountered an error. Please try again.',
         sender: 'bot',
         timestamp: new Date()
       };
       
       setMessages(prev => [...prev, botResponse]);
+    } catch (error) {
+      console.error('Chat error:', error);
+      const errorResponse: Message = {
+        id: messages.length + 2,
+        text: 'Sorry, I\'m having trouble connecting. Please try again later.',
+        sender: 'bot',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorResponse]);
+    } finally {
       setIsTyping(false);
-    }, 1000);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
