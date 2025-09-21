@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { X, Calendar, Users, Phone, Mail, User, FileText } from 'lucide-react';
+import { X, Calendar, Users, Phone, Mail, User, MapPin } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -14,23 +15,20 @@ interface BookingModalProps {
 
 const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, item }) => {
   const [formData, setFormData] = useState({
-    fullName: '',
-    phone: '',
+    name: '',
     email: '',
+    phone: '',
     checkIn: '',
-    nights: 1,
-    guests: 1,
-    notes: ''
+    checkOut: '',
   });
   const [loading, setLoading] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
-  const [bookingId, setBookingId] = useState('');
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: name === 'nights' || name === 'guests' ? parseInt(value) || 1 : value
+      [name]: value
     }));
   };
 
@@ -39,25 +37,25 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, item }) =>
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3001/api/book', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          type: item.type,
-          itemName: item.name,
-          ...formData
-        }),
-      });
+      const { error } = await supabase
+        .from('bookings')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            place: item.name,
+            check_in: formData.checkIn,
+            check_out: formData.checkOut || null,
+            type: item.type
+          }
+        ]);
 
-      const result = await response.json();
-
-      if (result.success) {
-        setBookingId(result.bookingId);
-        setConfirmed(true);
-      } else {
+      if (error) {
+        console.error('Booking error:', error);
         alert('Booking failed. Please try again.');
+      } else {
+        setConfirmed(true);
       }
     } catch (error) {
       console.error('Booking error:', error);
@@ -69,15 +67,12 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, item }) =>
 
   const handleClose = () => {
     setConfirmed(false);
-    setBookingId('');
     setFormData({
-      fullName: '',
-      phone: '',
+      name: '',
       email: '',
+      phone: '',
       checkIn: '',
-      nights: 1,
-      guests: 1,
-      notes: ''
+      checkOut: '',
     });
     onClose();
   };
@@ -102,24 +97,6 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, item }) =>
     }
   };
 
-  const getNightsLabel = () => {
-    switch (item.type) {
-      case 'hotel': return 'Nights';
-      case 'restaurant': return 'Duration (hours)';
-      case 'transport': return 'Tickets';
-      default: return 'Quantity';
-    }
-  };
-
-  const getGuestsLabel = () => {
-    switch (item.type) {
-      case 'hotel': return 'Guests';
-      case 'restaurant': return 'People';
-      case 'transport': return 'Passengers';
-      default: return 'People';
-    }
-  };
-
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
@@ -137,7 +114,10 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, item }) =>
           {!confirmed ? (
             <>
               <div className="mb-6 p-4 bg-blue-50 rounded-xl">
-                <h3 className="font-semibold text-blue-900 mb-1">{item.name}</h3>
+                <h3 className="font-semibold text-blue-900 mb-1 flex items-center">
+                  <MapPin className="h-4 w-4 mr-2" />
+                  {item.name}
+                </h3>
                 {item.price && (
                   <p className="text-blue-700">₹{item.price} {item.type === 'hotel' ? '/night' : item.type === 'transport' ? '/ticket' : '/person'}</p>
                 )}
@@ -151,28 +131,12 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, item }) =>
                   </label>
                   <input
                     type="text"
-                    name="fullName"
-                    value={formData.fullName}
+                    name="name"
+                    value={formData.name}
                     onChange={handleInputChange}
                     required
                     className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                     placeholder="Enter your full name"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    <Phone className="h-4 w-4 inline mr-1" />
-                    Phone Number *
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                    placeholder="Enter your phone number"
                   />
                 </div>
 
@@ -194,6 +158,22 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, item }) =>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <Phone className="h-4 w-4 inline mr-1" />
+                    Phone Number *
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                    placeholder="Enter your phone number"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     <Calendar className="h-4 w-4 inline mr-1" />
                     {getDateLabel()} *
                   </label>
@@ -208,55 +188,22 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, item }) =>
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                {item.type === 'hotel' && (
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {getNightsLabel()}
+                      <Calendar className="h-4 w-4 inline mr-1" />
+                      Check-out Date
                     </label>
-                    <select
-                      name="nights"
-                      value={formData.nights}
+                    <input
+                      type="date"
+                      name="checkOut"
+                      value={formData.checkOut}
                       onChange={handleInputChange}
+                      min={formData.checkIn || new Date().toISOString().split('T')[0]}
                       className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                    >
-                      {[...Array(10)].map((_, i) => (
-                        <option key={i + 1} value={i + 1}>{i + 1}</option>
-                      ))}
-                    </select>
+                    />
                   </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      <Users className="h-4 w-4 inline mr-1" />
-                      {getGuestsLabel()}
-                    </label>
-                    <select
-                      name="guests"
-                      value={formData.guests}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                    >
-                      {[...Array(10)].map((_, i) => (
-                        <option key={i + 1} value={i + 1}>{i + 1}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    <FileText className="h-4 w-4 inline mr-1" />
-                    Special Notes
-                  </label>
-                  <textarea
-                    name="notes"
-                    value={formData.notes}
-                    onChange={handleInputChange}
-                    rows={3}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                    placeholder="Any special requests or notes..."
-                  />
-                </div>
+                )}
 
                 <button
                   type="submit"
@@ -285,13 +232,10 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, item }) =>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Booking Confirmed!</h3>
-              <p className="text-gray-600 mb-4">
-                Your booking is confirmed. We'll send you a notification with confirmation and payment link on your given number and mail.
+              <h3 className="text-xl font-bold text-gray-900 mb-2">✅ Your booking is confirmed!</h3>
+              <p className="text-gray-600 mb-6">
+                We'll send details to your email and phone.
               </p>
-              <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                <p className="text-sm text-gray-600">Booking ID: <span className="font-mono font-medium">{bookingId}</span></p>
-              </div>
               <button
                 onClick={handleClose}
                 className="w-full bg-green-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-green-700 transition-colors"

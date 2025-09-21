@@ -123,7 +123,7 @@ const TouristGuidePage: React.FC = () => {
                 </button>
                 <button 
                   onClick={() => setSafetyModal({ isOpen: true, item: place })}
-                  className="flex-1 bg-red-600 text-white py-2 px-3 rounded-lg text-sm font-medium hover:bg-red-700 transition-colors"
+                  className="flex-1 bg-orange-600 text-white py-2 px-3 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors"
                 >
                   Safety Info
                 </button>

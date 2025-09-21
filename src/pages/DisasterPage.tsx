@@ -2,38 +2,80 @@ import React, { useState } from 'react';
 import { AlertTriangle, Phone, MapPin, Shield, Info, Users, Clock, Guitar as Hospital, Activity } from 'lucide-react';
 import { hospitals, emergencyServices } from '../data/emergencyData';
 import DisasterMap from '../components/DisasterMap';
+import { supabase } from '../lib/supabase';
+import type { Alert } from '../lib/supabase';
 
 const DisasterPage: React.FC = () => {
   const [sosClicked, setSosClicked] = useState(false);
   const [activeTab, setActiveTab] = useState<'emergency' | 'hospitals'>('emergency');
+  const [alerts, setAlerts] = useState<Alert[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  React.useEffect(() => {
+    fetchAlerts();
+    
+    // Subscribe to real-time updates
+    const subscription = supabase
+      .channel('alerts')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'alerts' }, (payload) => {
+        console.log('Alert update:', payload);
+        fetchAlerts();
+      })
+      .subscribe();
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  const fetchAlerts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('alerts')
+        .select('*')
+        .eq('active', true)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching alerts:', error);
+      } else {
+        setAlerts(data || []);
+      }
+    } catch (error) {
+      console.error('Error fetching alerts:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const tabs = [
     { id: 'emergency' as const, name: 'Emergency Contacts', icon: Phone },
     { id: 'hospitals' as const, name: 'Hospitals', icon: Hospital },
   ];
 
-  const currentAlerts = [
-    {
-      id: 1,
-      type: 'Weather Warning',
-      severity: 'moderate',
-      title: 'Heavy Rain Expected',
-      description: 'Heavy rainfall expected in Chamoli and Uttarkashi districts. Travelers advised to check road conditions.',
-      location: 'Chamoli, Uttarkashi',
-      time: '2 hours ago',
-      status: 'active'
-    },
-    {
-      id: 2,
-      type: 'Road Advisory',
-      severity: 'low',
-      title: 'Road Maintenance',
-      description: 'Temporary road closure on Rishikesh-Badrinath highway for maintenance work.',
-      location: 'Rishikesh-Badrinath Highway',
-      time: '6 hours ago',
-      status: 'active'
+  const getAlertIcon = (type: string) => {
+    switch (type) {
+      case 'weather': return '🌧️';
+      case 'landslide': return '⛰️';
+      case 'traffic': return '🚗';
+      case 'emergency': return '🚨';
+      default: return '⚠️';
     }
-  ];
+  };
+
+  const getTimeAgo = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
+    
+    if (diffInHours < 1) return 'Just now';
+    if (diffInHours === 1) return '1 hour ago';
+    if (diffInHours < 24) return `${diffInHours} hours ago`;
+    
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays === 1) return '1 day ago';
+    return `${diffInDays} days ago`;
+  };
 
   const safetyTips = [
     {
@@ -121,39 +163,53 @@ const DisasterPage: React.FC = () => {
       {/* Current Alerts */}
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">Current Alerts</h2>
-        <div className="space-y-4">
-          {currentAlerts.map((alert) => (
-            <div
-              key={alert.id}
-              className={`rounded-2xl border p-6 ${getSeverityColor(alert.severity)}`}
-            >
-              <div className="flex items-start space-x-4">
-                <div className="bg-white/50 p-2 rounded-lg">
-                  <AlertTriangle className="h-6 w-6" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-semibold text-lg">{alert.title}</h3>
-                    <div className="flex items-center space-x-2 text-sm">
-                      <Clock className="h-4 w-4" />
-                      <span>{alert.time}</span>
-                    </div>
+        {loading ? (
+          <div className="text-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading alerts...</p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {alerts.map((alert) => (
+              <div
+                key={alert.id}
+                className={`rounded-2xl border p-6 ${getSeverityColor(alert.severity)}`}
+              >
+                <div className="flex items-start space-x-4">
+                  <div className="bg-white/50 p-2 rounded-lg text-2xl">
+                    {getAlertIcon(alert.type)}
                   </div>
-                  <p className="mb-3">{alert.description}</p>
-                  <div className="flex items-center space-x-4 text-sm">
-                    <div className="flex items-center">
-                      <MapPin className="h-4 w-4 mr-1" />
-                      {alert.location}
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="font-semibold text-lg">{alert.title}</h3>
+                      <div className="flex items-center space-x-2 text-sm">
+                        <Clock className="h-4 w-4" />
+                        <span>{getTimeAgo(alert.created_at)}</span>
+                      </div>
                     </div>
-                    <div className="bg-white/30 px-2 py-1 rounded-full text-xs font-medium">
-                      {alert.type}
+                    <p className="mb-3">{alert.description}</p>
+                    <div className="flex items-center space-x-4 text-sm">
+                      <div className="flex items-center">
+                        <MapPin className="h-4 w-4 mr-1" />
+                        {alert.location}
+                      </div>
+                      <div className="bg-white/30 px-2 py-1 rounded-full text-xs font-medium capitalize">
+                        {alert.type}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+            {alerts.length === 0 && (
+              <div className="text-center py-8 bg-green-50 rounded-2xl">
+                <div className="text-green-600 mb-2">✅</div>
+                <p className="text-green-800 font-medium">No active alerts</p>
+                <p className="text-green-600 text-sm">All clear for travel in Uttarakhand</p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Emergency Contacts */}

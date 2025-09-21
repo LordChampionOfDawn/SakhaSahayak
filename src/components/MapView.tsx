@@ -61,6 +61,8 @@ const MapView: React.FC = () => {
     { id: 10, name: 'Badrinath', type: 'tourist', coordinates: [30.7433, 79.4938], description: 'Char Dham temple' },
     { id: 11, name: 'Gangotri', type: 'tourist', coordinates: [30.9993, 78.9411], description: 'Source of Ganges' },
     { id: 12, name: 'Yamunotri', type: 'tourist', coordinates: [31.0117, 78.4509], description: 'Source of Yamuna' },
+    { id: 11, name: 'Gangotri', type: 'tourist', coordinates: [30.9993, 78.9411], description: 'Source of Ganges' },
+    { id: 12, name: 'Yamunotri', type: 'tourist', coordinates: [31.0117, 78.4509], description: 'Source of Yamuna' },
     
     // Emergency Centers (Red markers)
     { id: 13, name: 'AIIMS Rishikesh', type: 'emergency', coordinates: [30.0869, 78.2676], description: 'Major hospital and emergency center' },
@@ -68,7 +70,7 @@ const MapView: React.FC = () => {
     { id: 15, name: 'Base Hospital Haldwani', type: 'emergency', coordinates: [29.2183, 79.5130], description: 'Emergency services' },
     
     // Quantum University (Green marker)
-    { id: 16, name: 'Quantum University', type: 'university', coordinates: [29.8265, 77.8940], description: 'Roorkee-Dehradun Highway' },
+    { id: 16, name: 'Quantum University', type: 'university', coordinates: [29.8248, 77.8770], description: 'Roorkee-Dehradun Highway' },
   ];
 
   const getMarkerIcon = (type: string) => {

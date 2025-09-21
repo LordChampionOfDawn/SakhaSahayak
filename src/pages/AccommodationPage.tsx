@@ -318,19 +318,19 @@ const AccommodationPage: React.FC = () => {
               <div className="flex space-x-2 mt-4">
                 <button 
                   onClick={() => setDetailsModal({ isOpen: true, item })}
-                  className="flex-1 bg-blue-600 text-white py-2 px-3 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+                  className="flex-1 bg-blue-600 text-white py-2 px-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
                 >
                   Learn More
                 </button>
                 <button 
                   onClick={() => setSafetyModal({ isOpen: true, item })}
-                  className="flex-1 bg-red-600 text-white py-2 px-3 rounded-lg text-sm font-medium hover:bg-red-700 transition-colors"
+                  className="flex-1 bg-orange-600 text-white py-2 px-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors"
                 >
                   Safety Info
                 </button>
                 <button 
                   onClick={() => setBookingModal({ isOpen: true, item: { ...item, type: activeTab === 'hotels' ? 'hotel' : 'restaurant' } })}
-                  className="flex-1 bg-green-600 text-white py-2 px-3 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors"
+                  className="flex-1 bg-green-600 text-white py-2 px-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors"
                 >
                   Book Now
                 </button>

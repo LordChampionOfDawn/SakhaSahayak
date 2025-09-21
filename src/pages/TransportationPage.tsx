@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Bus, Train, Car, MapPin, Clock, DollarSign, Shield, AlertTriangle, Phone, CheckCircle, Wifi, Heart } from 'lucide-react';
 import { transportationData } from '../data/transportation';
+import BookingModal from '../components/BookingModal';
 
 const TransportationPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'buses' | 'trains' | 'cabs'>('buses');
+  const [bookingModal, setBookingModal] = useState<{ isOpen: boolean; item: any }>({ isOpen: false, item: null });
 
   const tabs = [
     { id: 'buses' as const, name: 'Buses', icon: Bus },
@@ -122,7 +124,9 @@ const TransportationPage: React.FC = () => {
 
             <div className="flex space-x-3">
               <button className="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-green-700 transition-colors">
-                {activeTab === 'cabs' ? 'Book Ride' : 'Book Ticket'}
+                <span onClick={() => setBookingModal({ isOpen: true, item: { ...item, type: 'transport' } })}>
+                  {activeTab === 'cabs' ? 'Book Ride' : 'Book Ticket'}
+                </span>
               </button>
               <button className="bg-gray-100 text-gray-600 py-2 px-4 rounded-lg font-medium hover:bg-gray-200 transition-colors">
                 Details
@@ -132,6 +136,12 @@ const TransportationPage: React.FC = () => {
         ))}
       </div>
 
+      {/* Booking Modal */}
+      <BookingModal
+        isOpen={bookingModal.isOpen}
+        onClose={() => setBookingModal({ isOpen: false, item: null })}
+        item={bookingModal.item}
+      />
     </div>
   );
 };
