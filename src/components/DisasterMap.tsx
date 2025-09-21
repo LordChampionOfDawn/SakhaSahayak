@@ -45,7 +45,7 @@ interface Alert {
 }
 
 const DisasterMap: React.FC = () => {
-  const [origin, setOrigin] = useState<[number, number]>([29.8265, 77.8940]); // Quantum University
+  const [origin, setOrigin] = useState<[number, number]>([29.8248, 77.8770]); // Quantum University
   const [destination, setDestination] = useState<[number, number] | null>(null);
   const [selectedDestination, setSelectedDestination] = useState('');
   const [useCurrentLocation, setUseCurrentLocation] = useState(false);
@@ -184,7 +184,7 @@ const DisasterMap: React.FC = () => {
               <div className="flex space-x-2">
                 <button
                   onClick={() => {
-                    setOrigin([29.8265, 77.8940]);
+                    setOrigin([29.8248, 77.8770]);
                     setUseCurrentLocation(false);
                   }}
                   className={`px-3 py-2 text-sm rounded-lg border transition-colors ${
