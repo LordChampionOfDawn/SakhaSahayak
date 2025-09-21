@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { Star, MapPin, Wifi, Car, Coffee, Utensils, User } from 'lucide-react';
+import { Star, MapPin, Wifi, Car, Coffee, Utensils, User, Shield, AlertTriangle, Heart, Phone, CheckCircle } from 'lucide-react';
 import { accommodations } from '../data/accommodations';
+import DetailsModal from '../components/DetailsModal';
+import SafetyModal from '../components/SafetyModal';
+import BookingModal from '../components/BookingModal';
 
 const AccommodationPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'hotels' | 'restaurants'>('hotels');
@@ -9,6 +12,10 @@ const AccommodationPage: React.FC = () => {
   const [cuisineFilter, setCuisineFilter] = useState('all');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+
+  const [detailsModal, setDetailsModal] = useState<{ isOpen: boolean; item: any }>({ isOpen: false, item: null });
+  const [safetyModal, setSafetyModal] = useState<{ isOpen: boolean; item: any }>({ isOpen: false, item: null });
+  const [bookingModal, setBookingModal] = useState<{ isOpen: boolean; item: any }>({ isOpen: false, item: null });
 
   const tabs = [
     { id: 'hotels' as const, name: 'Hotels & Homestays', icon: MapPin },
@@ -146,10 +153,10 @@ const AccommodationPage: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="text-center mb-8">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Stay & Dine
+          Safe Stay & Dine
         </h1>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          Find the perfect accommodation and dining experiences in Uttarakhand, from cozy homestays to fine dining restaurants.
+          Find safe accommodation and dining experiences in Uttarakhand with comprehensive safety ratings and emergency preparedness.
         </p>
       </div>
 
@@ -306,8 +313,26 @@ const AccommodationPage: React.FC = () => {
                   {activeTab === 'hotels' ? `₹${(item as any).price}` : (item as any).priceRange}
                   {activeTab === 'hotels' && <span className="text-sm text-gray-500">/night</span>}
                 </div>
-                <button className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors">
-                  {activeTab === 'hotels' ? 'Book Now' : 'Reserve Table'}
+              </div>
+              
+              <div className="flex space-x-2 mt-4">
+                <button 
+                  onClick={() => setDetailsModal({ isOpen: true, item })}
+                  className="flex-1 bg-blue-600 text-white py-2 px-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+                >
+                  Learn More
+                </button>
+                <button 
+                  onClick={() => setSafetyModal({ isOpen: true, item })}
+                  className="flex-1 bg-orange-600 text-white py-2 px-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors"
+                >
+                  Safety Info
+                </button>
+                <button 
+                  onClick={() => setBookingModal({ isOpen: true, item: { ...item, type: activeTab === 'hotels' ? 'hotel' : 'restaurant' } })}
+                  className="flex-1 bg-green-600 text-white py-2 px-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors"
+                >
+                  Book Now
                 </button>
               </div>
             </div>
@@ -326,6 +351,27 @@ const AccommodationPage: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Modals */}
+      <DetailsModal
+        isOpen={detailsModal.isOpen}
+        onClose={() => setDetailsModal({ isOpen: false, item: null })}
+        item={detailsModal.item}
+        type={activeTab === 'hotels' ? 'hotel' : 'restaurant'}
+      />
+      
+      <SafetyModal
+        isOpen={safetyModal.isOpen}
+        onClose={() => setSafetyModal({ isOpen: false, item: null })}
+        item={safetyModal.item}
+        type={activeTab === 'hotels' ? 'hotel' : 'restaurant'}
+      />
+      
+      <BookingModal
+        isOpen={bookingModal.isOpen}
+        onClose={() => setBookingModal({ isOpen: false, item: null })}
+        item={bookingModal.item}
+      />
     </div>
   );
 };

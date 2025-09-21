@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { AlertTriangle } from 'lucide-react';
 import Navbar from './Navbar';
 import MobileNavigation from './MobileNavigation';
 

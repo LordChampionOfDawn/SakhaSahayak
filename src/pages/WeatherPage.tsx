@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CloudRain, Sun, Cloud, Wind, Droplets, Eye, Thermometer } from 'lucide-react';
+import { CloudRain, Sun, Cloud, Wind, Droplets, Eye, Thermometer, AlertTriangle, Shield, Calendar, MapPin, Phone } from 'lucide-react';
 
 interface WeatherData {
   location: string;
@@ -126,10 +126,10 @@ const WeatherPage: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="text-center mb-8">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Weather Updates
+          Weather & Travel Safety
         </h1>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          Stay updated with real-time weather conditions across Uttarakhand to plan your perfect trip.
+          Stay updated with real-time weather conditions and travel impact forecasting to make informed booking decisions and ensure safe travel.
         </p>
       </div>
 
@@ -237,8 +237,11 @@ const WeatherPage: React.FC = () => {
       )}
 
       {/* Weather Tips */}
-      <div className="bg-white rounded-2xl p-8 shadow-lg">
-        <h3 className="text-xl font-bold text-gray-900 mb-6">Seasonal Weather Tips</h3>
+      <div className="bg-white rounded-2xl p-8 shadow-lg mb-8">
+        <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+          <Thermometer className="h-5 w-5 text-purple-600 mr-2" />
+          Travel Planning Tips
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {weatherTips.map((tip, index) => {
             const Icon = tip.icon;
@@ -252,22 +255,6 @@ const WeatherPage: React.FC = () => {
               </div>
             );
           })}
-        </div>
-      </div>
-
-      {/* Weather Alert */}
-      <div className="mt-8 bg-yellow-50 border border-yellow-200 rounded-2xl p-6">
-        <div className="flex items-start space-x-3">
-          <div className="bg-yellow-100 p-2 rounded-lg flex-shrink-0">
-            <Thermometer className="h-6 w-6 text-yellow-600" />
-          </div>
-          <div>
-            <h3 className="font-semibold text-yellow-800 mb-2">Weather Advisory</h3>
-            <p className="text-sm text-yellow-700">
-              Plan your activities based on current weather conditions. Mountain weather can change rapidly, 
-              so always carry appropriate gear and check updates regularly.
-            </p>
-          </div>
         </div>
       </div>
     </div>

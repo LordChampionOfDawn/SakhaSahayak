@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { MapPin, Hotel, Utensils, Phone, Eye, EyeOff } from 'lucide-react';
+import { MapPin, Hotel, Utensils, Phone, Eye, EyeOff, Building } from 'lucide-react';
 import MapView from './MapView';
 
 interface MapLocation {
   id: number;
   name: string;
-  type: 'tourist' | 'hotel' | 'restaurant' | 'emergency';
+  type: 'tourist' | 'hotel' | 'restaurant' | 'emergency' | 'university';
   lat: number;
   lng: number;
   description: string;
@@ -17,25 +17,38 @@ const InteractiveMap: React.FC = () => {
     hotel: true,
     restaurant: true,
     emergency: true,
+    university: true,
   });
 
   // Mock locations data
   const locations: MapLocation[] = [
+    // Tourist Spots (Blue markers)
     { id: 1, name: 'Rishikesh', type: 'tourist', lat: 30.0869, lng: 78.2676, description: 'Yoga Capital of the World' },
     { id: 2, name: 'Nainital', type: 'tourist', lat: 29.3803, lng: 79.4636, description: 'Beautiful hill station with lake' },
-    { id: 3, name: 'Kedarnath', type: 'tourist', lat: 30.7346, lng: 79.0669, description: 'Sacred Jyotirlinga temple' },
-    { id: 4, name: 'The Himalayan Heritage Resort', type: 'hotel', lat: 30.0869, lng: 78.2676, description: 'Luxury resort in Rishikesh' },
-    { id: 5, name: 'Hotel Snow View Palace', type: 'hotel', lat: 29.3803, lng: 79.4636, description: 'Lake view hotel in Nainital' },
-    { id: 6, name: 'Ganga View Restaurant', type: 'restaurant', lat: 30.0869, lng: 78.2676, description: 'Multi-cuisine with river views' },
-    { id: 7, name: 'Boat House Club Restaurant', type: 'restaurant', lat: 29.3803, lng: 79.4636, description: 'Continental cuisine by the lake' },
-    { id: 8, name: 'Emergency Services', type: 'emergency', lat: 30.0869, lng: 78.2676, description: 'Police & Medical Services' },
+    { id: 3, name: 'Mussoorie', type: 'tourist', lat: 30.4598, lng: 78.0664, description: 'Queen of Hills' },
+    { id: 4, name: 'Haridwar', type: 'tourist', lat: 29.9457, lng: 78.1642, description: 'Holy city on Ganges' },
+    { id: 5, name: 'Dehradun', type: 'tourist', lat: 30.3165, lng: 78.0322, description: 'Capital city of Uttarakhand' },
+    { id: 6, name: 'Auli', type: 'tourist', lat: 30.5358, lng: 79.5660, description: 'Skiing destination' },
+    { id: 7, name: 'Almora', type: 'tourist', lat: 29.5971, lng: 79.6593, description: 'Cultural town in Kumaon' },
+    { id: 8, name: 'Jim Corbett', type: 'tourist', lat: 29.5316, lng: 78.9463, description: 'National Park' },
+    { id: 9, name: 'Kedarnath', type: 'tourist', lat: 30.7346, lng: 79.0669, description: 'Sacred Jyotirlinga temple' },
+    { id: 10, name: 'Badrinath', type: 'tourist', lat: 30.7433, lng: 79.4938, description: 'Char Dham temple' },
+    { id: 11, name: 'Gangotri', type: 'tourist', lat: 30.9993, lng: 78.9411, description: 'Source of Ganges' },
+    { id: 12, name: 'Yamunotri', type: 'tourist', lat: 31.0117, lng: 78.4509, description: 'Source of Yamuna' },
+    
+    // Emergency Centers (Red markers)
+    { id: 13, name: 'AIIMS Rishikesh', type: 'emergency', lat: 30.0869, lng: 78.2676, description: 'Major hospital and emergency center' },
+    { id: 14, name: 'Max Hospital Dehradun', type: 'emergency', lat: 30.3165, lng: 78.0322, description: 'Emergency medical services' },
+    { id: 15, name: 'Base Hospital Haldwani', type: 'emergency', lat: 29.2183, lng: 79.5130, description: 'Emergency services' },
+    
+    // Quantum University (Green marker)
+    { id: 16, name: 'Quantum University', type: 'university', lat: 29.8265, lng: 77.8940, description: 'Roorkee-Dehradun Highway' },
   ];
 
   const categories = [
     { id: 'tourist' as const, name: 'Tourist Spots', icon: MapPin, color: 'text-green-600 bg-green-100' },
-    { id: 'hotel' as const, name: 'Hotels', icon: Hotel, color: 'text-blue-600 bg-blue-100' },
-    { id: 'restaurant' as const, name: 'Restaurants', icon: Utensils, color: 'text-orange-600 bg-orange-100' },
     { id: 'emergency' as const, name: 'Emergency', icon: Phone, color: 'text-red-600 bg-red-100' },
+    { id: 'university' as const, name: 'University', icon: Building, color: 'text-green-600 bg-green-100' },
   ];
 
   const toggleCategory = (categoryId: keyof typeof visibleCategories) => {

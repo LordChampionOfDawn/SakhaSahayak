@@ -108,3 +108,16 @@
     box-shadow: 0 0 30px rgba(239, 68, 68, 0.8);
   }
 }
+
+/* Custom marker styles */
+.blue-marker {
+  filter: hue-rotate(0deg);
+}
+
+.red-marker {
+  filter: hue-rotate(0deg);
+}
+
+.green-marker {
+  filter: hue-rotate(0deg);
+}

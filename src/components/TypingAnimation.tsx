@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 const TypingAnimation: React.FC = () => {
-  const words = ['Discover', 'Explore', 'Experience', 'Embrace'];
+  const words = ['Explore', 'Travel Smart', 'Stay Safe'];
+  const colors = ['text-green-300', 'text-blue-300', 'text-yellow-300'];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -33,7 +34,7 @@ const TypingAnimation: React.FC = () => {
 
   return (
     <h1 className="text-4xl md:text-6xl font-bold mb-6">
-      <span className="text-green-300">
+      <span className={colors[currentWordIndex]}>
         {currentText}
         <span className="animate-pulse">|</span>
       </span>

@@ -11,8 +11,8 @@ const MobileNavigation: React.FC = () => {
     { path: '/accommodation', icon: Bed, label: 'Stay' },
     { path: '/transportation', icon: Bus, label: 'Travel' },
     { path: '/weather', icon: CloudRain, label: 'Weather' },
-    { path: '/disaster', icon: AlertTriangle, label: 'SOS' },
     { path: '/events', icon: Calendar, label: 'Events' },
+    { path: '/disaster', icon: AlertTriangle, label: 'SOS' },
   ];
 
   const isActive = (path: string) => location.pathname === path;

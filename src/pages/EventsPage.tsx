@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Calendar, MapPin, Clock, X, Users, Star } from 'lucide-react';
+import { Calendar, MapPin, Clock, X, Users, Star, Shield, AlertTriangle, Heart, Phone, CheckCircle } from 'lucide-react';
 import { eventsData } from '../data/eventsData';
+import DetailsModal from '../components/DetailsModal';
 
 const EventsPage: React.FC = () => {
-  const [selectedEvent, setSelectedEvent] = useState<any>(null);
+  const [detailsModal, setDetailsModal] = useState<{ isOpen: boolean; item: any }>({ isOpen: false, item: null });
   const [categoryFilter, setCategoryFilter] = useState('all');
 
   const categories = [
@@ -19,77 +20,14 @@ const EventsPage: React.FC = () => {
     categoryFilter === 'all' || event.category === categoryFilter
   );
 
-  const EventModal = ({ event, onClose }: { event: any; onClose: () => void }) => (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="relative">
-          <img 
-            src={event.image} 
-            alt={event.name}
-            className="w-full h-64 object-cover rounded-t-2xl"
-          />
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full hover:bg-white transition-colors"
-          >
-            <X className="h-5 w-5" />
-          </button>
-        </div>
-        
-        <div className="p-6">
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">{event.name}</h2>
-              <div className="flex items-center text-gray-600 mb-2">
-                <MapPin className="h-4 w-4 mr-1" />
-                {event.location}
-              </div>
-              <div className="flex items-center text-gray-600 mb-2">
-                <Clock className="h-4 w-4 mr-1" />
-                {event.timing}
-              </div>
-            </div>
-            <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">
-              {event.category}
-            </span>
-          </div>
-          
-          <p className="text-gray-600 mb-6">{event.description}</p>
-          
-          <div className="mb-6">
-            <h4 className="font-semibold text-gray-900 mb-3">Event Highlights</h4>
-            <div className="grid grid-cols-2 gap-3">
-              {event.highlights.map((highlight: string, index: number) => (
-                <div key={index} className="flex items-center space-x-2">
-                  <Star className="h-4 w-4 text-purple-600" />
-                  <span className="text-sm text-gray-700">{highlight}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          
-          <div className="bg-purple-50 rounded-xl p-4">
-            <h4 className="font-semibold text-purple-900 mb-2">Planning to Attend?</h4>
-            <p className="text-sm text-purple-700 mb-3">
-              Make sure to plan your visit during the event timing and book accommodation in advance.
-            </p>
-            <button className="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition-colors">
-              Get Directions
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="text-center mb-8">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Events & Festivals
+          Cultural Events & Festivals
         </h1>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          Experience the rich cultural heritage of Uttarakhand through its vibrant festivals, spiritual gatherings, and traditional celebrations.
+          Experience the rich cultural heritage of Uttarakhand through its vibrant festivals and cultural celebrations.
         </p>
       </div>
 
@@ -166,12 +104,14 @@ const EventsPage: React.FC = () => {
                 </div>
               </div>
               
-              <button 
-                onClick={() => setSelectedEvent(event)}
-                className="w-full bg-purple-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-purple-700 transition-colors"
-              >
-                Learn More
-              </button>
+              <div>
+                <button 
+                  onClick={() => setDetailsModal({ isOpen: true, item: event })}
+                  className="w-full bg-purple-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-purple-700 transition-colors"
+                >
+                  Learn More
+                </button>
+              </div>
             </div>
           </div>
         ))}
@@ -188,12 +128,12 @@ const EventsPage: React.FC = () => {
       )}
 
       {/* Event Modal */}
-      {selectedEvent && (
-        <EventModal 
-          event={selectedEvent} 
-          onClose={() => setSelectedEvent(null)} 
-        />
-      )}
+      <DetailsModal
+        isOpen={detailsModal.isOpen}
+        onClose={() => setDetailsModal({ isOpen: false, item: null })}
+        item={detailsModal.item}
+        type="event"
+      />
     </div>
   );
 };

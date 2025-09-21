@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Bus, Train, Car, MapPin, Clock, DollarSign } from 'lucide-react';
+import { Bus, Train, Car, MapPin, Clock, DollarSign, Shield, AlertTriangle, Phone, CheckCircle, Wifi, Heart } from 'lucide-react';
 import { transportationData } from '../data/transportation';
+import BookingModal from '../components/BookingModal';
 
 const TransportationPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'buses' | 'trains' | 'cabs'>('buses');
+  const [bookingModal, setBookingModal] = useState<{ isOpen: boolean; item: any }>({ isOpen: false, item: null });
 
   const tabs = [
     { id: 'buses' as const, name: 'Buses', icon: Bus },
@@ -17,10 +19,10 @@ const TransportationPage: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="text-center mb-8">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Transportation
+          Safe Transportation
         </h1>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          Find the best transportation options to explore Uttarakhand - from buses and trains to private cabs and taxis.
+          Find safe transportation options with real-time safety monitoring, verified drivers, and emergency support throughout your journey.
         </p>
       </div>
 
@@ -122,49 +124,24 @@ const TransportationPage: React.FC = () => {
 
             <div className="flex space-x-3">
               <button className="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-green-700 transition-colors">
-                {activeTab === 'cabs' ? 'Book Ride' : 'Book Ticket'}
+                <span onClick={() => setBookingModal({ isOpen: true, item: { ...item, type: 'transport' } })}>
+                  {activeTab === 'cabs' ? 'Book Ride' : 'Book Ticket'}
+                </span>
               </button>
               <button className="bg-gray-100 text-gray-600 py-2 px-4 rounded-lg font-medium hover:bg-gray-200 transition-colors">
-                View Details
+                Details
               </button>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Quick Tips */}
-      <div className="mt-12 bg-blue-50 rounded-2xl p-6 border border-blue-100">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Travel Tips</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="flex items-start space-x-3">
-            <div className="bg-blue-100 p-2 rounded-lg flex-shrink-0">
-              <Clock className="h-5 w-5 text-blue-600" />
-            </div>
-            <div>
-              <h4 className="font-medium text-gray-900">Book in Advance</h4>
-              <p className="text-sm text-gray-600">Especially during peak season (Apr-Jun, Sep-Nov)</p>
-            </div>
-          </div>
-          <div className="flex items-start space-x-3">
-            <div className="bg-blue-100 p-2 rounded-lg flex-shrink-0">
-              <MapPin className="h-5 w-5 text-blue-600" />
-            </div>
-            <div>
-              <h4 className="font-medium text-gray-900">Check Route Conditions</h4>
-              <p className="text-sm text-gray-600">Mountain roads may have weather-related delays</p>
-            </div>
-          </div>
-          <div className="flex items-start space-x-3">
-            <div className="bg-blue-100 p-2 rounded-lg flex-shrink-0">
-              <DollarSign className="h-5 w-5 text-blue-600" />
-            </div>
-            <div>
-              <h4 className="font-medium text-gray-900">Compare Prices</h4>
-              <p className="text-sm text-gray-600">Prices may vary based on season and demand</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Booking Modal */}
+      <BookingModal
+        isOpen={bookingModal.isOpen}
+        onClose={() => setBookingModal({ isOpen: false, item: null })}
+        item={bookingModal.item}
+      />
     </div>
   );
 };
