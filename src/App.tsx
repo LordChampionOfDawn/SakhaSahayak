@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { AuthProvider } from './contexts/AuthContext';
 import Layout from './components/Layout';
-import { Chatbot } from './components/Chatbot';
+import Chatbot from './components/Chatbot';
 import HomePage from './pages/HomePage';
 import TouristGuidePage from './pages/TouristGuidePage';
 import AccommodationPage from './pages/AccommodationPage';

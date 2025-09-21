@@ -8,16 +8,12 @@ interface Message {
   timestamp: Date;
 }
 
-interface ChatbotProps {
-  currentPage?: string;
-}
-
-export const Chatbot: React.FC<ChatbotProps> = ({ currentPage = 'Home' }) => {
+const Chatbot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: `Hello! I'm your SakhaSahayak assistant. I can help you with tourism information and safety guidance for Uttarakhand. You are currently on: ${currentPage}`,
+      text: 'Hello! I\'m your SakhaSahayak assistant. I can help you with tourism information, safety guidance, and disaster management for Uttarakhand. How can I assist you today?',
       isUser: false,
       timestamp: new Date()
     }
@@ -49,35 +45,61 @@ export const Chatbot: React.FC<ChatbotProps> = ({ currentPage = 'Home' }) => {
     setIsTyping(true);
 
     try {
-      const response = await fetch('/functions/v1/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: inputText,
-          context: currentPage
-        })
-      });
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+      
+      if (!apiKey) {
+        const errorMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          text: 'Gemini API key not found. Please add it in .env.',
+          isUser: false,
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, errorMessage]);
+        setIsTyping(false);
+        return;
+      }
+
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            contents: [
+              {
+                parts: [
+                  { 
+                    text: `You are SakhaSahayak, a helpful assistant for Uttarakhand tourism, safety, and disaster management. Provide accurate, helpful information about places to visit, safety tips, weather conditions, emergency contacts, and disaster preparedness in Uttarakhand. User question: ${inputText}`
+                  }
+                ]
+              }
+            ]
+          })
+        }
+      );
 
       if (!response.ok) {
-        throw new Error('Failed to get response');
+        throw new Error('API request failed');
       }
 
       const data = await response.json();
+      const botResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || 'I apologize, but I couldn\'t generate a proper response. Please try asking again.';
       
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: data.response || 'I received your message. How can I help you with your travel plans in Uttarakhand?',
+        text: botResponse,
         isUser: false,
         timestamp: new Date()
       };
 
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
+      console.error('Chatbot error:', error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: "Sorry, I'm having trouble connecting. Please try again later.",
+        text: 'Sorry, I\'m having trouble connecting. Please try again later.',
         isUser: false,
         timestamp: new Date()
       };
@@ -137,7 +159,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ currentPage = 'Home' }) => {
                       : 'bg-gray-100 text-gray-800'
                   }`}
                 >
-                  <p className="text-sm">{message.text}</p>
+                  <p className="text-sm whitespace-pre-wrap">{message.text}</p>
                   <p className="text-xs opacity-70 mt-1">
                     {message.timestamp.toLocaleTimeString([], {
                       hour: '2-digit',
@@ -188,3 +210,5 @@ export const Chatbot: React.FC<ChatbotProps> = ({ currentPage = 'Home' }) => {
     </>
   );
 };
+
+export default Chatbot;
