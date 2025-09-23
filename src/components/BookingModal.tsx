@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { X, Calendar, Users, Phone, Mail, User, MapPin } from 'lucide-react';
-import { supabase } from '../lib/supabase';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -36,33 +35,20 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, item }) =>
     e.preventDefault();
     setLoading(true);
 
-    try {
-      const { error } = await supabase
-        .from('bookings')
-        .insert([
-          {
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            place: item.name,
-            check_in: formData.checkIn,
-            check_out: formData.checkOut || null,
-            type: item.type
-          }
-        ]);
-
-      if (error) {
-        console.error('Booking error:', error);
-        alert('Booking failed. Please try again.');
-      } else {
-        setConfirmed(true);
-      }
-    } catch (error) {
-      console.error('Booking error:', error);
-      alert('Booking failed. Please check your connection and try again.');
-    } finally {
+    // Simulate booking process
+    setTimeout(() => {
+      console.log('Booking submitted:', {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        place: item.name,
+        checkIn: formData.checkIn,
+        checkOut: formData.checkOut,
+        type: item.type
+      });
+      setConfirmed(true);
       setLoading(false);
-    }
+    }, 1500);
   };
 
   const handleClose = () => {
