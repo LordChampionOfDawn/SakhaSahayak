@@ -74,7 +74,7 @@ const LocalGuidePage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 py-12 px-4">
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
           {/* Header */}
           <div className="bg-gradient-to-r from-green-600 to-blue-600 p-8 text-white text-center">
@@ -84,7 +84,7 @@ const LocalGuidePage: React.FC = () => {
 
           {/* Contact Info */}
           <div className="p-8 border-b border-gray-200">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="flex items-center space-x-3">
                 <div className="bg-green-100 p-3 rounded-full">
                   <Phone className="h-6 w-6 text-green-600" />
@@ -122,7 +122,7 @@ const LocalGuidePage: React.FC = () => {
             {/* Inquire About Section */}
             <div className="mb-8">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Inquire About</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <label className="flex items-center space-x-3">
                   <input
                     type="checkbox"
@@ -171,7 +171,7 @@ const LocalGuidePage: React.FC = () => {
 
             {/* Form Fields */}
             <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     First Name *
