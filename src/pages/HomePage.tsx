@@ -42,6 +42,13 @@ const HomePage: React.FC = () => {
       color: 'from-purple-500 to-indigo-600',
     },
     {
+      title: 'Digital Brochures',
+      description: 'Download travel guides',
+      icon: MapPin,
+      path: '/brochures',
+      color: 'from-teal-500 to-cyan-600',
+    },
+    {
       title: 'Emergency SOS',
       description: 'Emergency assistance',
       icon: AlertTriangle,
@@ -54,8 +61,14 @@ const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-green-800 via-green-700 to-blue-800 text-white">
-        <div className="absolute inset-0 bg-black/20"></div>
+      <div className="relative text-white">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: 'url(https://images.pexels.com/photos/3573382/pexels-photo-3573382.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop)'
+          }}
+        ></div>
+        <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative px-4 py-16 md:py-24">
           <div className="max-w-4xl mx-auto text-center">
             <TypingAnimation />
