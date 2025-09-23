@@ -2,51 +2,45 @@ import React, { useState } from 'react';
 import { AlertTriangle, Phone, MapPin, Shield, Info, Users, Clock, Guitar as Hospital, Activity } from 'lucide-react';
 import { hospitals, emergencyServices } from '../data/emergencyData';
 import DisasterMap from '../components/DisasterMap';
-import { supabase } from '../lib/supabase';
-import type { Alert } from '../lib/supabase';
+
+interface Alert {
+  id: string;
+  title: string;
+  description: string;
+  type: 'weather' | 'landslide' | 'traffic' | 'emergency';
+  severity: 'low' | 'medium' | 'high';
+  location: string;
+  coordinates?: [number, number];
+  created_at: string;
+  active: boolean;
+}
 
 const DisasterPage: React.FC = () => {
   const [sosClicked, setSosClicked] = useState(false);
   const [activeTab, setActiveTab] = useState<'emergency' | 'hospitals'>('emergency');
-  const [alerts, setAlerts] = useState<Alert[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  React.useEffect(() => {
-    fetchAlerts();
-    
-    // Subscribe to real-time updates
-    const subscription = supabase
-      .channel('alerts')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'alerts' }, (payload) => {
-        console.log('Alert update:', payload);
-        fetchAlerts();
-      })
-      .subscribe();
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
-
-  const fetchAlerts = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('alerts')
-        .select('*')
-        .eq('active', true)
-        .order('created_at', { ascending: false });
-
-      if (error) {
-        console.error('Error fetching alerts:', error);
-      } else {
-        setAlerts(data || []);
-      }
-    } catch (error) {
-      console.error('Error fetching alerts:', error);
-    } finally {
-      setLoading(false);
+  const [alerts] = useState<Alert[]>([
+    {
+      id: '1',
+      title: 'Heavy Rainfall Alert',
+      description: 'Heavy rainfall expected in Uttarkashi and Chamoli districts. Avoid travel to high-altitude areas.',
+      type: 'weather',
+      severity: 'high',
+      location: 'Uttarkashi, Chamoli',
+      created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+      active: true
+    },
+    {
+      id: '2',
+      title: 'Road Closure',
+      description: 'NH-7 closed due to landslide near Rishikesh. Alternative routes available via Haridwar.',
+      type: 'traffic',
+      severity: 'medium',
+      location: 'Rishikesh - NH-7',
+      created_at: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
+      active: true
     }
-  };
+  ]);
+  const [loading, setLoading] = useState(true);
 
   const tabs = [
     { id: 'emergency' as const, name: 'Emergency Contacts', icon: Phone },
