@@ -49,6 +49,13 @@ const HomePage: React.FC = () => {
       color: 'from-teal-500 to-cyan-600',
     },
     {
+      title: 'Digital Brochures',
+      description: 'Download travel guides',
+      icon: MapPin,
+      path: '/brochures',
+      color: 'from-teal-500 to-cyan-600',
+    },
+    {
       title: 'Emergency SOS',
       description: 'Emergency assistance',
       icon: AlertTriangle,

@@ -15,6 +15,7 @@ import AuthPage from './pages/AuthPage';
 import ProfilePage from './pages/ProfilePage';
 import LocalGuidePage from './pages/LocalGuidePage';
 import DigitalBrochuresPage from './pages/DigitalBrochuresPage';
+import DigitalBrochuresPage from './pages/DigitalBrochuresPage';
 import LocalGuideButton from './components/LocalGuideButton';
 
 const queryClient = new QueryClient({
@@ -46,6 +47,7 @@ function App() {
                     <Route path="/events" element={<EventsPage />} />
                     <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/local-guide" element={<LocalGuidePage />} />
+                    <Route path="/brochures" element={<DigitalBrochuresPage />} />
                   </Routes>
                 </Layout>
               } />
